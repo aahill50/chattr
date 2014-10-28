@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
-  validates :content, :user_id, length: { minimum: 1, maximum: 141 }
+  validates :content, length: { minimum: 2, maximum: 141 }
+  validates :user_id, presence: true
 
   belongs_to :author,
     class_name: "User",
