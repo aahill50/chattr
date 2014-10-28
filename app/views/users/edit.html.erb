@@ -1,0 +1,5 @@
+<%= render partial: 'shared/user_form',
+    locals: { url: user_url(@user),
+              button_name: "Update",
+              form_type: "edit_user",
+              form_method: "PATCH" } %>

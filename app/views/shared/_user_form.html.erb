@@ -1,0 +1,54 @@
+<form action="<%= url %>" method="POST">
+  <% unless form_method == "POST" %>
+    <input type="hidden" name="_method" value="<%= form_method %>">
+  <% end %>
+
+  <%= render 'shared/auth_token' %>
+
+  <% if form_type == "new_user" || form_type == "edit_user" %>
+  <label for="fullname">Full Name</label>
+	<input type="text"
+				 id="fullname"
+				 name="user[fullname]"
+				 placeholder="Enter your Full Name"
+				 value="<%= @user.fullname %>">
+
+  <label for="email">Email</label>
+  <input type="text"
+    		 id="email"
+    		 name="user[email]"
+    		 placeholder="Enter your Email"
+    		 value="<%= @user.email %>">
+  <% end %>
+
+	<label for="username">Username</label>
+
+	<input type="text"
+				 id="username"
+				 name="user[username]"
+				 placeholder="Enter your username"
+				 value="<%= @user.username %>">
+
+  <% if form_type == "edit_user" %>
+	<textarea id="bio"
+				 name="user[bio]"
+				 placeholder="Enter a short biography"
+				 value="<%= @user.bio %>"></textarea>
+  <% end %>
+
+	<label for="password">Password</label>
+	<input type="password"
+	 			 id="password"
+				 name="user[password]"
+				 placeholder="Enter your password">
+
+  <% if form_type == "edit_user" %>
+	<label for="password_confirmation">Password Confirmation</label>
+	<input type="password"
+	 			 id="password_confirmation"
+				 name="user[password_confirmation]"
+				 placeholder="Confirm your password">
+         <% end %>
+
+	<button id="sign-in" class="submit"><%= button_name %></button>
+</form>

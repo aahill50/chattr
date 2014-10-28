@@ -1,9 +1,37 @@
+# Home Mac Setup - run 'be rake db:setup' when changing locs
+# ======================
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: chattr_development
+#   pool: 5
+#   username: aaron
+#   password:
+#
+# test:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: chattr_test
+#   pool: 5
+#   username: aaron
+#   password:
+#
+# production:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: chattr_production
+#   pool: 5
+#   username: aaron
+#   password:
+
+# a/A setup - run 'be rake db:setup' when changing locs
+# ======================
 development:
   adapter: postgresql
   encoding: unicode
   database: chattr_development
   pool: 5
-  username: aaron
+  username: appacademy
   password:
 
 test:
@@ -11,7 +39,7 @@ test:
   encoding: unicode
   database: chattr_test
   pool: 5
-  username: aaron
+  username: appacademy
   password:
 
 production:
@@ -19,5 +47,5 @@ production:
   encoding: unicode
   database: chattr_production
   pool: 5
-  username: aaron
+  username: appacademy
   password:

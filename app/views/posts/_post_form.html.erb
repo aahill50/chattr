@@ -1,0 +1,9 @@
+<form action="<%= posts_url %>" method="POST">
+  <%= render 'shared/auth_token' %>
+  <input type="hidden"
+    name="post[parent_post_id]">
+  <textarea
+    placeholder="Enter your post"
+    name="post[content]"></textarea>
+  <button class="submit">Post</button>
+</form>

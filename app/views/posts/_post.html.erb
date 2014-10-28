@@ -1,0 +1,7 @@
+<article class="post">
+  <%= post.author.fullname %> -
+  @<%= post.author.username %> -
+  <%= time_ago_in_words(post.created_at) %> ago
+
+  <%= post.content %>
+</article>

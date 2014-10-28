@@ -1,15 +1,15 @@
 class Post < ActiveRecord::Base
-  validates :content, :user_id, presence: true
-  
+  validates :content, :user_id, length: { minimum: 1, maximum: 141 }
+
   belongs_to :author,
     class_name: "User",
     foreign_key: :user_id,
     inverse_of: :posts
-    
+
   belongs_to :parent_post,
     class_name: "Post",
     inverse_of: :children_posts
-    
+
   has_many :children_posts,
     class_name: "Post",
     foreign_key: :parent_post_id,
