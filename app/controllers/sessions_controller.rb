@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
       redirect_to :root
     else
       flash.now[:errors] = ["Unable to sign in with those credentials."]
+      @user = User.new
       render :new
     end
   end

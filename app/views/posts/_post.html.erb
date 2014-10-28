@@ -1,7 +1,10 @@
 <article class="post">
-  <%= post.author.fullname %> -
-  @<%= post.author.username %> -
-  <%= time_ago_in_words(post.created_at) %> ago
-
-  <%= post.content %>
+  <section class="post-info">
+    <%= post.author.fullname %> -
+    @<%= post.author.username %> -
+    <%= time_ago_in_words(post.created_at) %> ago
+  </section>
+  <section class="post-content">
+    <%= post.content %>
+  </section>
 </article>
