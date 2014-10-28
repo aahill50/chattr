@@ -14,7 +14,11 @@ RSpec.describe User, :type => :model do
   it { should validate_uniqueness_of(:email).case_insensitive
     .with_message("is not available") }
   it { should validate_uniqueness_of :session_token}
+
   it { should have_many(:posts)}
+
+  it { should have_many(:followers) }
+  it { should have_many(:followed_users) }
 
   # Old Unit Tests
   # describe 'user' do

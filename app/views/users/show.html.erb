@@ -1,1 +1,5 @@
-<a href="<%= edit_user_url(current_user) %>">Edit Profile</a>
+<% if current_user.id == @user.id %>
+  <a href="<%= edit_user_url(current_user) %>">Edit Profile</a>
+<% else %>
+  <%= render 'users/follow_form', user: @user %>
+<% end %>

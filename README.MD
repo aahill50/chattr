@@ -5,7 +5,7 @@ A clone of the popular web app: [Twitter](http://www.twitter.com)
 * Secure User Authentication
 * Users can post
   * Posts limited to 141 characters
-* Users to follow each other *(not yet implemented)*
+* Users can follow each other
 * Each user has a "timeline" *(not yet implemented)*
  * Timeline will show all of a users posts as well as posts from people they follow *(not yet implemented)*
  * Timeline sorted reverse chronologically, with the most recent at the top *(not yet implemented)*

@@ -8,6 +8,19 @@ class User < ActiveRecord::Base
 
   has_many :posts, inverse_of: :author, order: "created_at DESC"
 
+  has_many :followers, through: :follows_from_others, source: :follower
+  has_many :followed_users, through: :follows_to_others, source: :followed_user
+
+  has_many :follows_from_others,
+      class_name: "UserFollow",
+      foreign_key: :user_id,
+      inverse_of: :followed_user
+
+  has_many :follows_to_others,
+    class_name: "UserFollow",
+    foreign_key: :follower_id,
+    inverse_of: :follower
+
   def User.find_by_credentials(username, password)
     user = User.find_by( username: username)
     user && user.is_password?(password) ? user : nil
@@ -37,5 +50,9 @@ class User < ActiveRecord::Base
 
   def is_password?(password)
     BCrypt::Password.new(password_digest).is_password?(password)
+  end
+
+  def follows?(other_user)
+    other_user.followers.include?(self)
   end
 end
