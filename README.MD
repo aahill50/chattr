@@ -1,8 +1,8 @@
-#Chattr
+#chattr (url tbd)
 A clone of the popular web app: [Twitter](http://www.twitter.com)
 
 ###Features
-* Secure User Authentication *(not yet implemented)*
+* Secure User Authentication
 * Users can post, limited to 141 characters *(not yet implemented)*
 * Users to follow each other *(not yet implemented)*
 * Each user has a "timeline" *(not yet implemented)*
