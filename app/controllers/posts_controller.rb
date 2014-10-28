@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_filter :require_signed_in
+
   def index
     @posts = current_user.posts
     render :index
