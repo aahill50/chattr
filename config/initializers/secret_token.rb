@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Chattr::Application.config.secret_key_base = 'd33d3bba071f1f5923c47e0c0704b7b372188f5cd42560e8d76e844057cb397792e47423ac9effbdf2e215ab922611ae64f2255f57b1a40ed4e08d071f1dbb99'
+Chattr::Application.config.secret_key_base = ENV['secret_key_base']
