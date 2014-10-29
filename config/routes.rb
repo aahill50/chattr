@@ -5,7 +5,7 @@ Chattr::Application.routes.draw do
     resources :posts, only: [:new]
   end
 
-  resources :posts, except: [:new]
+  resources :posts
 
   resource :user_follows, only: [:create, :destroy]
 

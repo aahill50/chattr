@@ -1,4 +1,4 @@
-<%= render 'posts/post_form' %>
+<%= render 'posts/post_form', parent_post_id: nil %>
 <% @posts.each do |post| %>
   <%= render 'posts/post', post: post %>
 <% end %>

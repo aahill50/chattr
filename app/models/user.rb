@@ -67,4 +67,8 @@ class User < ActiveRecord::Base
         posts.user_id = ? OR posts.user_id IN (?)
       SQL
   end
+
+  def join_date
+    self.created_at.to_formatted_s(:short).split.first(2).reverse.join(' ')
+  end
 end

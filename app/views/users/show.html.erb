@@ -1,5 +1,44 @@
 <% if current_user.id == @user.id %>
   <a href="<%= edit_user_url(current_user) %>">Edit Profile</a>
-<% else %>
-  <%= render 'users/follow_form', user: @user %>
 <% end %>
+<section class="main-user-info">
+  <div class="fullname"><%= @user.fullname %></div>
+  <div class="username">@<%= @user.username %></div>
+  <div class="join-date">Joined <%= @user.join_date %></div>
+  <% unless current_user.id == @user.id %>
+    <%= render 'users/follow_form', user: @user %>
+  <% end %>
+</section>
+
+<section class="user-posts">
+  <section class="post-content active">
+    <div "title">Posts</div>
+    <% @user.posts.each do |post| %>
+      <%= render 'posts/post', post: post %>
+    <% end %>
+  </section>
+
+  <section class="post-content active">
+    <div "title">Following</div>
+    <% @user.followers.each do |follower| %>
+      <div class="sub-user-info">
+        <%= render 'users/profile', user: follower %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="post-content active">
+    <div "title">Followers</div>
+    <% @user.followed_users.each do |followed_user| %>
+      <div class="sub-user-info">
+        <%= render 'users/profile', user: followed_user %>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="post-content active">
+    <div "title">Favorite Posts</div>
+    <%#= @user.favorite_posts %>
+  </section>
+</section>
+

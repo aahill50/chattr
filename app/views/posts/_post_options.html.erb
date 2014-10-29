@@ -1,0 +1,12 @@
+<form action="<%= new_post_url %>" action="POST">
+  <input type="hidden" name="post[parent_post_id]" value="<%= post.id %>">
+  <button class="post-option">Reply</button>
+</form>
+
+<form action="<%= posts_url %>" action="POST">
+  <button class="post-option">Repost</button>
+</form>
+
+<form action="<%= posts_url %>" action="POST">
+  <button class="post-option">Favorite</button>
+</form>

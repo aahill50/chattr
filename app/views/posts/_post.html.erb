@@ -1,10 +1,14 @@
 <article class="post">
   <section class="post-info">
-    <%= post.author.fullname %> -
-    @<%= post.author.username %> -
+    <a href="<%= user_url(post.author) %>"><%= post.author.fullname %> -
+    @<%= post.author.username %> </a>-
     <%= time_ago_in_words(post.created_at) %> ago
   </section>
+
   <section class="post-content">
-    <%= post.content %> 
+    <a href="<%= post_url(post) %>"><%= post.content %></a>
+  </section>
+  <section "buttons-container">
+    <%= render "posts/post_options", post: post %>
   </section>
 </article>

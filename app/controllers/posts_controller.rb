@@ -6,6 +6,12 @@ class PostsController < ApplicationController
     render :index
   end
 
+  def new
+    @post = current_user.posts.new
+    @post.parent_post_id = params[:post][:parent_post_id]
+    render :new
+  end
+
   def create
     post = current_user.posts.new(post_params)
 
@@ -15,6 +21,17 @@ class PostsController < ApplicationController
       flash[:errors] = post.errors.full_messages
       @posts = Post.where(user_id: current_user.id)
       render :index
+    end
+  end
+
+  def show
+    @post = Post.find_by(id: params[:id])
+
+    if @post
+      render :show
+    else
+      flash[:errors] = ["Post not found"]
+      redirect_to :root
     end
   end
 

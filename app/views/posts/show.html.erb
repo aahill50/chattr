@@ -1,0 +1,4 @@
+<%= render 'posts/post', post: @post %>
+<% @post.children_posts.each do |child| %>
+  <%= render 'posts/post', post: child %>
+<% end %>

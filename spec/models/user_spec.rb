@@ -19,6 +19,10 @@ RSpec.describe User, :type => :model do
 
   it { should have_many(:followers) }
   it { should have_many(:followed_users) }
+  it { should have_many(:followed_posts) }
+
+  it { should respond_to(:main_feed_posts) }
+  it { should respond_to(:join_date) }
 
   # Old Unit Tests
   # describe 'user' do

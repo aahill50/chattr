@@ -9,4 +9,6 @@ RSpec.describe Post, :type => :model do
 
   it { should have_many :children_posts }
   it { should belong_to :parent_post }
+
+  it { should belong_to :author }
 end
