@@ -1,0 +1,11 @@
+<h1>Search Results</h1>
+  <% if @found_users.empty? %>
+<div class="no-results">No results</div>
+
+<% else %>
+  <% @found_users.each do |user| %>
+    <div class="user search-result">
+      <%= render 'users/profile', user: user %>
+    </div>
+  <% end %>
+<% end %>

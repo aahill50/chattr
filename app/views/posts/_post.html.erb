@@ -1,14 +1,30 @@
 <article class="post">
-  <section class="post-info">
-    <a href="<%= user_url(post.author) %>"><%= post.author.fullname %> -
-    @<%= post.author.username %> </a>-
-    <%= time_ago_in_words(post.created_at) %> ago
+  <figure class="avatar">
+
+  </figure>
+  <section class="post-info group">
+    <div class="fullname">
+      <a href="<%= user_url(post.author) %>">
+        <%= post.author.fullname %>
+      </a>
+    </div>
+    <div class="username">
+      <a href="<%= user_url(post.author) %>">
+        <%= post.author._username %>
+      </a>
+    </div>
+    <div class="timestamp">
+      <%= time_ago_in_words(post.created_at) %> ago
+    </div>
   </section>
 
   <section class="post-content">
-    <a href="<%= post_url(post) %>"><%= post.content %></a>
+    <div class="text">
+      <a href="<%= post_url(post) %>"><%= post.content %></a>
+    </div>
+    <section class="buttons-container">
+      <%= render "posts/post_options", post: post %>
+    </section>
   </section>
-  <section "buttons-container">
-    <%= render "posts/post_options", post: post %>
-  </section>
+
 </article>

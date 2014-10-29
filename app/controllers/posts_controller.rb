@@ -8,7 +8,7 @@ class PostsController < ApplicationController
 
   def new
     @post = current_user.posts.new
-    @post.parent_post_id = params[:post][:parent_post_id]
+    @post.parent_post_id = params[:post] && [:parent_post_id]
     render :new
   end
 

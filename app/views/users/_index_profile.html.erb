@@ -1,0 +1,20 @@
+<section class="top">
+  <div class="avatar"></div>
+</section>
+
+<section class="names">
+  <div class="fullname"><%= current_user.fullname %></div>
+  <div class="username"><%= current_user._username %></div>
+</section>
+
+<section class="bottom titles">
+  <div class="count-title">POSTS</div>
+  <div class="count-title">FOLLOWING</div>
+  <div class="count-title">FOLLOWERS</div>
+</section>
+
+<section class="bottom counts">
+  <div class="post count"><%= current_user.post_count %></div>
+  <div class="following count"><%= current_user.following_count %></div>
+  <div class="follower count"><%= current_user.follower_count %></div>
+</section>

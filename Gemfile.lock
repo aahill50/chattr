@@ -183,6 +183,7 @@ DEPENDENCIES
   rails (= 4.0.4)
   rails_12factor
   rspec-rails (~> 3.0)
+  sass
   sass-rails (~> 4.0.2)
   sdoc
   shoulda-matchers

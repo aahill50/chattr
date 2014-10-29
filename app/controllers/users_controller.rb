@@ -51,6 +51,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    search_str = params[:search][:string]
+    @found_users = User.search_for(search_str)
+    render 'shared/search_results'
+  end
+
   private
   def user_params
     params.require(:user).permit(:username, :fullname, :password, :email, :bio)

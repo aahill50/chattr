@@ -3,7 +3,7 @@
 <% end %>
 <section class="main-user-info">
   <div class="fullname"><%= @user.fullname %></div>
-  <div class="username">@<%= @user.username %></div>
+  <div class="username"><%= @user._username %></div>
   <div class="join-date">Joined <%= @user.join_date %></div>
   <% unless current_user.id == @user.id %>
     <%= render 'users/follow_form', user: @user %>

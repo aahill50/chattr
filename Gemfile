@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt'
 gem 'figaro', '1.0.0'
+gem 'sass'
 
 group :doc do
   gem 'sdoc', require: false

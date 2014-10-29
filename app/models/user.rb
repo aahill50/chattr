@@ -29,7 +29,17 @@ class User < ActiveRecord::Base
     user && user.is_password?(password) ? user : nil
   end
 
+
+  def User.search_for(str)
+    sql_search_str = "%" + str + "%"
+    User.where("username LIKE ?", sql_search_str)
+  end
+
   attr_reader :password
+
+  def _username
+    "@" + username
+  end
 
   def ensure_session_token
     self.session_token ||= generate_session_token
@@ -70,5 +80,17 @@ class User < ActiveRecord::Base
 
   def join_date
     self.created_at.to_formatted_s(:short).split.first(2).reverse.join(' ')
+  end
+
+  def post_count
+    self.posts.count
+  end
+
+  def following_count
+    self.follows_to_others.count
+  end
+
+  def follower_count
+    self.follows_from_others.count
   end
 end

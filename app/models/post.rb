@@ -15,4 +15,12 @@ class Post < ActiveRecord::Base
     class_name: "Post",
     foreign_key: :parent_post_id,
     inverse_of: :parent_post
+
+  def format_RP(content)
+    new_content = "RP-" + self.author._username + " - " + content
+    if new_content.length > 141
+      new_content = new_content[0..138] + "..."
+    end
+    new_content
+  end
 end
