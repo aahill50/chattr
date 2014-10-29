@@ -6,10 +6,7 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
-  has_many :posts, inverse_of: :author, order: "created_at DESC"
-
-  has_many :followers, through: :follows_from_others, source: :follower
-  has_many :followed_users, through: :follows_to_others, source: :followed_user
+  has_many :posts, order: "created_at DESC", inverse_of: :author
 
   has_many :follows_from_others,
       class_name: "UserFollow",
@@ -20,6 +17,12 @@ class User < ActiveRecord::Base
     class_name: "UserFollow",
     foreign_key: :follower_id,
     inverse_of: :follower
+
+  has_many :followers, through: :follows_from_others, source: :follower
+
+  has_many :followed_users, through: :follows_to_others, source: :followed_user
+
+  has_many :followed_posts, through: :followed_users, source: :posts
 
   def User.find_by_credentials(username, password)
     user = User.find_by( username: username)
@@ -54,5 +57,14 @@ class User < ActiveRecord::Base
 
   def follows?(other_user)
     other_user.followers.include?(self)
+  end
+
+  def main_feed_posts
+    subquery_sql = self.followed_users.select("users.id")
+
+    Post.all.select("posts.*")
+      .where(<<-SQL, self.id, subquery_sql ).order("posts.created_at DESC")
+        posts.user_id = ? OR posts.user_id IN (?)
+      SQL
   end
 end
