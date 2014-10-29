@@ -1,4 +1,4 @@
-#chattr (www.the-chattr.com)[http:/www.the-chattr.com]
+#chattr [www.the-chattr.com](http:/www.the-chattr.com)
 A clone of the popular web app: [Twitter](http://www.twitter.com)
 
 ###Features
