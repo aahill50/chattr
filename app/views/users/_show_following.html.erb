@@ -1,0 +1,10 @@
+<section class="post-container">
+  <section class="post-content active">
+    <div "title">Following</div>
+    <% user.followed_users.each do |followed_user| %>
+      <div class="sub-user-info">
+        <%= render 'users/profile', user: followed_user %>
+      </div>
+    <% end %>
+  </section>
+</section>

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     @users = User.all
     render :index
   end
-  
+
   def new
     @user = User.new
     render :new
@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @profile_type = 'posts'
     render :show
   end
 
@@ -60,6 +61,24 @@ class UsersController < ApplicationController
     search_str = params[:search][:string]
     @found_users = User.search_for(search_str)
     render 'shared/search_results'
+  end
+
+  def profile_following
+    @user = User.find(params[:id])
+    @profile_type = 'following'
+    render :show
+  end
+
+  def profile_followers
+    @user = User.find(params[:id])
+    @profile_type = 'followers'
+    render :show
+  end
+
+  def profile_favorite_posts
+    @user = User.find(params[:id])
+    @profile_type = 'favorite_posts'
+    render :show
   end
 
   private

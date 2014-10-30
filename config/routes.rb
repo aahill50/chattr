@@ -9,4 +9,8 @@ Chattr::Application.routes.draw do
   post 'users/search', to: 'users#search', as: 'user_search'
   post 'posts/new', to: 'posts#reply'
 
+  get 'users/:id/following', to: 'users#profile_following', as: 'user_profile_following'
+  get 'users/:id/followers', to: 'users#profile_followers', as: 'user_profile_followers'
+  get 'users/:id/favorite_posts', to: 'users#profile_favorite_posts', as: 'user_profile_favorite_posts'
+
 end

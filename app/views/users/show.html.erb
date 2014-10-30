@@ -9,12 +9,22 @@
 <section class="profile-nav-ribbon">
 	<figure class="ribbon">
 		<ul class="profile-nav">
-			<li class="left"><a href="#">Posts</a></li>
-			<li class="left"><a href="#">Following</a></li>
-			<li class="left"><a href="#">Followers</a></li>
-			<li class="left"><a href="#">Favorite Posts</a></li>
-			<li class="left"><a href="#">Favorite Users</a></li>
-			
+			<li class="left">
+        <a href="<%= user_url(@user) %>">Posts</a>
+      </li>
+			<li class="left">
+        <a href="<%= user_profile_following_url(@user) %>">Following</a>
+      </li>
+			<li class="left">
+        <a href="<%= user_profile_followers_url(@user) %>">Followers</a>
+      </li>
+			<li class="left">
+        <a href="<%= user_profile_favorite_posts_url(@user) %>">Favorite Posts</a>
+      </li>
+			<li class="left">
+        <a href="#">Favorite Users</a>
+      </li>
+
 			<% if current_user.id == @user.id %>
 			  <li class="right">
 					<a href="<%= edit_user_url(current_user) %>">Edit Profile</a>
@@ -37,35 +47,18 @@
 	  <% end %>
 	</section>
 
-	<section class="post-container">
-	  <section class="post-content active">
-	    <header class="title"><h2>Posts</h2></div>
-	    <% @user.posts.each do |post| %>
-	      <%= render 'posts/post', post: post %>
-	    <% end %>
-	  </section>
+  <% if @profile_type == 'posts' %>
+    <%= render 'show_posts', user: @user %>
+  <% end %>
 
-	  <section class="post-content active">
-	    <div "title">Following</div>
-	    <% @user.followed_users.each do |followed_user| %>
-	      <div class="sub-user-info">
-	        <%= render 'users/profile', user: followed_user %>
-	      </div>
-	    <% end %>
-	  </section>
+  <% if @profile_type == 'following' %>
+    <%= render 'show_following', user: @user %>
+  <% end %>
 
-	  <section class="post-content active">
-	    <div "title">Followers</div>
-	    <% @user.followers.each do |follower| %>
-	      <div class="user-profiles">
-	        <%= render 'users/profile', user: follower %>
-	      </div>
-	    <% end %>
-	  </section>
+  <% if @profile_type == 'followers' %>
+    <%= render 'show_followers', user: @user %>
+  <% end %>
 
-	  <section class="post-content active">
-	    <div "title">Favorite Posts</div>
-	    <%#= @user.favorite_posts %>
-	  </section>
-	</section>
-</section>
+  <% if @profile_type == 'favorite_posts' %>
+    <%= render 'show_favorite_posts', user: @user %>
+  <% end %>
