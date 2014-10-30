@@ -205,8 +205,26 @@ ul {
   margin: 10px auto;
   position: relative;
   width: 560px;
-  background: white;
+  background: transparent;
   border-radius: 5px;
+}
+
+.main-user-info {
+  position: relative;
+  width: 290px;
+  margin: 0 5px;
+  float: left;
+  background: transparent;
+  border-radius: 5px;
+}
+
+.main-user-info figure {
+	width: 200px;
+	height: 200px;
+	margin: 10px;
+	background: orange;
+	border: 5px solid #EEE;
+	border-radius: 5px;
 }
 
 .post-container h2 {
@@ -216,12 +234,15 @@ ul {
   padding: 10px;
   color: #777;
   height: 20px;
+	background: white;
+	border-radius: 5px 5px 0 0;
 }
 
 
 article.post {
   border-bottom: 1px solid #ccc;
   padding: 10px;
+	background: white;
 }
 
 .post .avatar {
@@ -274,6 +295,62 @@ article.post {
 
 .buttons-container form {
   display: inline-block;
+}
+
+.profile-banner {
+	height: 170px;
+	background: #229AC1;
+}
+
+.profile-nav-ribbon.stretch {
+	position: absolute;
+	z-index: -1;
+	width: 100%;
+	height: 65px;
+	background: white;
+}
+
+.profile-nav-ribbon {
+	width: 560px;
+	height: 65px;
+	margin: 0 auto;
+	background: transparent;
+}
+
+.profile-nav-ribbon ul .left {
+	float: left;
+}
+
+.profile-nav-ribbon ul .right {
+	float: right;
+}
+
+.profile-nav li {
+	padding-top: 40px;
+}
+
+.profile-nav a {
+	text-decoration: none;
+	margin-right: 10px;
+	font-size: 18px;
+}
+
+.main-content .main-user-info {
+	position: absolute;
+	top: -196px;
+}
+
+.user-profile {
+	width: 150px;
+	height: 150px;
+	margin: 10px;
+	background: white;
+	border-radius: 5px;
+	float: left;
+}
+
+.user-profile div {
+	background: transparent;
 }
 
 .group:after {

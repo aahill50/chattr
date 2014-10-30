@@ -1,3 +1,13 @@
-<div class="fullname"><a href="<%= user_url(user) %>"><%= user.fullname %></a></div>
-<div class="username">@<%= user.username %></div>
-<div class="join-date">Joined <%= user.join_date %></div>
+<section class="user-profile">
+	<section class="top">
+	  <div class="avatar"></div>
+	</section>
+
+	<div class="fullname"><a href="<%= user_url(user) %>"><%= user.fullname %></a></div>
+	<div class="username"><%= user._username %></div>
+	<div class="join-date">Joined <%= user.join_date %></div>
+
+	<section class="bottom bio">
+	  <div class="bio"><%= user.bio %></div>
+	</section>
+</section>

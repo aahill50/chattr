@@ -1,0 +1,5 @@
+<div class="user-profiles">
+	<% @users.each do |user| %>
+		<%= render 'users/profile', user: user %>
+	<% end %>
+</div>

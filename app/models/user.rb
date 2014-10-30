@@ -31,8 +31,12 @@ class User < ActiveRecord::Base
 
 
   def User.search_for(str)
-    sql_search_str = "%" + str + "%"
-    User.where("username LIKE ?", sql_search_str)
+    sql_search_str = "%" + str.downcase + "%"
+    User.where(<<-SQL, str: sql_search_str) 
+      lower(username) LIKE :str
+        OR lower(fullname) LIKE :str
+        OR lower(email) = :str
+    SQL
   end
 
   attr_reader :password
