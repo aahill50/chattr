@@ -24,6 +24,9 @@ RSpec.describe User, :type => :model do
   it { should respond_to(:main_feed_posts) }
   it { should respond_to(:join_date) }
 
+  it { should have_many :favorites }
+  it { should respond_to :favorite_posts }
+
   # Old Unit Tests
   # describe 'user' do
   #   before(:all) { User.destroy_all }

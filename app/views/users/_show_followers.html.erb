@@ -1,6 +1,6 @@
 <section class="post-container">
   <section class="post-content active">
-    <div "title">Followers</div>
+    <header class="title"><h2>Followers</h2></header>
     <% user.followers.each do |follower| %>
       <div class="user-profiles">
         <%= render 'users/profile', user: follower %>

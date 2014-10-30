@@ -6,6 +6,8 @@ Chattr::Application.routes.draw do
   resources :posts
   resource :user_follows, only: [:create, :destroy]
   resource :session, only: [:new, :create, :destroy]
+  resource :favorites, only: [:create, :destroy]
+
   post 'users/search', to: 'users#search', as: 'user_search'
   post 'posts/new', to: 'posts#reply'
 

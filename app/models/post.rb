@@ -16,6 +16,8 @@ class Post < ActiveRecord::Base
     foreign_key: :parent_post_id,
     inverse_of: :parent_post
 
+  has_many :favorites, as: :favoriteable
+
   def format_RP(content)
     new_content = "RP-" + self.author._username + " - " + content
     if new_content.length > 141

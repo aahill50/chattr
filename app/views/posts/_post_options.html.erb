@@ -11,7 +11,9 @@
   <button class="post-option">Repost</button>
 </form>
 
-<form action="<%= posts_url %>" method="POST">
+<form action="<%= favorites_url %>" method="POST">
   <%= render 'shared/auth_token' %>
+  <input type="hidden" name="fav[favoriteable_id]" value="<%= post.id %>">
+  <input type="hidden" name="fav[favoriteable_type]" value="Post">
   <button class="post-option">Favorite</button>
 </form>

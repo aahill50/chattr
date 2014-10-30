@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
     foreign_key: :follower_id,
     inverse_of: :follower
 
+  has_many :favorites
+
   has_many :followers, through: :follows_from_others, source: :follower
 
   has_many :followed_users, through: :follows_to_others, source: :followed_user
@@ -32,7 +34,7 @@ class User < ActiveRecord::Base
 
   def User.search_for(str)
     sql_search_str = "%" + str.downcase + "%"
-    User.where(<<-SQL, str: sql_search_str) 
+    User.where(<<-SQL, str: sql_search_str)
       lower(username) LIKE :str
         OR lower(fullname) LIKE :str
         OR lower(email) = :str
@@ -79,6 +81,14 @@ class User < ActiveRecord::Base
     Post.all.select("posts.*")
       .where(<<-SQL, self.id, subquery_sql ).order("posts.created_at DESC")
         posts.user_id = ? OR posts.user_id IN (?)
+      SQL
+  end
+
+  def favorite_posts
+    # Post.joins("INNER JOIN posts ON favorites.favoriteable_id = posts.id")
+    Post.joins(:favorites)
+      .where(<<-SQL, self.id)
+        favorites.user_id = ? AND favoriteable_type = 'Post'
       SQL
   end
 

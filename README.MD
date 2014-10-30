@@ -10,7 +10,7 @@ A clone of the popular web app: [Twitter](http://www.twitter.com)
 * Each user has a "timeline"
  * Timeline will show all of a users posts as well as posts from people they follow
  * Timeline sorted reverse chronologically, with the most recent at the top
-* Users can mark posts as "favorites" *(not yet implemented)*
+* Users can mark posts as "favorites"
 * Users can upload a short bio, visible on their profile page *(not yet implemented)*
 * Users will be able to include hashtags in their posts *(not yet implemented)*
 * Hashtags will be searchable *(not yet implemented)*

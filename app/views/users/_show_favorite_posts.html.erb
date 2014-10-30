@@ -1,6 +1,8 @@
 <section class="post-container">
   <section class="post-content active">
-    <div "title">Favorite Posts</div>
-    <%#= @user.favorite_posts %>
+    <header class="title"><h2>Favorite Posts</h2></header>
+      <% user.favorite_posts.each do |post| %>
+        <%= render "posts/post", post: post %>
+      <% end %>
   </section>
 </section>
