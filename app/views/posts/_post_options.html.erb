@@ -1,4 +1,5 @@
 <form action="<%= new_post_url %>" method="POST">
+  <%= render 'shared/auth_token' %>
   <input type="hidden" name="post[parent_post_id]" value="<%= post.id %>">
   <button class="post-option">Reply</button>
 </form>
@@ -11,5 +12,6 @@
 </form>
 
 <form action="<%= posts_url %>" method="POST">
+  <%= render 'shared/auth_token' %>
   <button class="post-option">Favorite</button>
 </form>

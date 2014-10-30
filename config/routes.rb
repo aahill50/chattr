@@ -7,5 +7,6 @@ Chattr::Application.routes.draw do
   resource :user_follows, only: [:create, :destroy]
   resource :session, only: [:new, :create, :destroy]
   post 'users/search', to: 'users#search', as: 'user_search'
+  post 'posts/new', to: 'posts#reply'
 
 end
