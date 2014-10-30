@@ -10,6 +10,8 @@ gem 'jbuilder', '~> 1.2'
 gem 'bcrypt'
 gem 'figaro', '1.0.0'
 gem 'sass'
+gem 'backbone-on-rails'
+gem 'ejs'
 
 group :doc do
   gem 'sdoc', require: false

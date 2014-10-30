@@ -8,6 +8,11 @@ Chattr::Application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   resource :favorites, only: [:create, :destroy]
 
+  namespace :api, defaults: {format: :json} do
+    resources :users
+    resources :posts
+  end
+
   post 'users/search', to: 'users#search', as: 'user_search'
   post 'posts/new', to: 'posts#reply'
 
