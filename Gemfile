@@ -12,6 +12,7 @@ gem 'figaro', '1.0.0'
 gem 'sass'
 gem 'backbone-on-rails'
 gem 'ejs'
+gem 'faker'
 
 group :doc do
   gem 'sdoc', require: false
@@ -23,7 +24,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'byebug'
   gem 'pry-rails'
-  gem 'faker'
 end
 
 group :test do
