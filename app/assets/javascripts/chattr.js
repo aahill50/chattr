@@ -1,4 +1,4 @@
-.window.Chattr = {
+window.Chattr = {
   Models: {},
   Collections: {},
   Views: {},

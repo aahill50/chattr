@@ -9,6 +9,7 @@ Chattr::Application.routes.draw do
   resource :favorites, only: [:create, :destroy]
 
   namespace :api, defaults: {format: :json} do
+    get 'users/current_user', to: 'users#current'
     resources :users
     resources :posts
   end

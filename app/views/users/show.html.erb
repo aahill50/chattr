@@ -27,7 +27,7 @@
 
 			<% if current_user.id == @user.id %>
 			  <li class="right">
-					<a href="<%= edit_user_url(current_user) %>">Edit Profile</a>
+					<a href="<%= edit_user_url(current_user) %>">Edit</a>
 					</li>
 			<% end %>
 		</ul>
@@ -42,6 +42,7 @@
 	  <div class="fullname"><%= @user.fullname %></div>
 	  <div class="username"><%= @user._username %></div>
 	  <div class="join-date">Joined <%= @user.join_date %></div>
+	  <div class="bio"><%= @user.bio %></div>
 	  <% unless current_user.id == @user.id %>
 	    <%= render 'users/follow_form', user: @user %>
 	  <% end %>

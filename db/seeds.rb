@@ -18,7 +18,17 @@
 #
 # UserFollow.create(user_id: , follower_id: )
 
-10.times do
+User.create(username:"aaron",
+            fullname:"Aaron Hill",
+            email:"aaron@example.com",
+            bio:"I made this!",
+            password:"password")
+
+USER_COUNT = 20
+POST_COUNT = 200
+FOLLOW_COUNT = 80
+
+(USER_COUNT - 1).times do
   fname = Faker::Name.name
   uname = Faker::Internet.user_name(fname)
   eml = Faker::Internet.safe_email(fname)
@@ -30,50 +40,13 @@
               password:"password")
 end
 
-User.create(username:"aaron",
-            fullname:"Aaron Hill",
-            email:"aaron@example.com",
-            bio:"I made this!",
-            password:"password")
-
-100.times do
-  Post.create(content:Faker::Lorem.sentence,
-              user_id: (1..11).to_a.sample)
+POST_COUNT.times do
+  Post.create(content:Faker::Company.catch_phrase,
+              user_id: (1..USER_COUNT).to_a.sample)
 end
 
-30.times do
-  uf = UserFollow.new(user_id: (1..11).to_a.sample, follower_id: (1..11).to_a.sample  )
+FOLLOW_COUNT.times do
+  uf = UserFollow.new(user_id: (1..USER_COUNT).to_a.sample,
+                      follower_id: (1..USER_COUNT).to_a.sample )
   uf.save unless uf.user_id == uf.follower_id
 end
-
-# Post.create(content:"what's the weather like?",
-#             user_id: 1)
-#
-# Post.create(content:"sunny!",
-#             user_id: 2,
-#             parent_post_id: 1)
-#
-# Post.create(content:"rainy :(",
-#             user_id: 3,
-#             parent_post_id: 1)
-#
-# Post.create(content:"who likes turtles?",
-#             user_id: 2)
-#
-# Post.create(content:"me!",
-#             user_id: 5,
-#             parent_post_id: 4)
-#
-# Post.create(content:"cars and windows",
-#             user_id: 4)
-#
-# Post.create(content:"raindrops and lollipops",
-#             user_id: 3,
-#             parent_post_id: 6)
-#
-# Post.create(content:"eat ALL the things",
-#             user_id: 4)
-#
-# Post.create(content:"pizza.",
-#             user_id: 5)
-

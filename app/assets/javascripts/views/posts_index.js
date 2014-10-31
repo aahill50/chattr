@@ -1,7 +1,11 @@
-Chattr.Views.PostsIndex = Backbone.View.extend({
+Chattr.Views.PostsIndex = Backbone.CompositeView.extend({
   initialize: function () {
-    this.listenTo(this.collection, "add", this.render)
+    this.listenTo(this.collection, "sync", this.render)
   },
+
+  tagName: "section",
+
+  className: "post-container",
 
   template: JST["posts/index"],
 

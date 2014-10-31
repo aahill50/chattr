@@ -1,7 +1,4 @@
-@posts.each do |post|
-  json.content post.content
-  json.author_fullname post.author.fullname
-  json.author_username post.author.username
-  json.timestamp post.author.fullname
-  json.content post.content
+json.array! @posts do |post|
+  json.extract! post, :content, :author
+  json.timestamp time_ago_in_words(post.created_at) + " ago"
 end

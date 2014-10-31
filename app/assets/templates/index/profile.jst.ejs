@@ -1,10 +1,9 @@
 <section class="top">
   <div class="avatar"></div>
 </section>
-
 <section class="names">
-  <div class="fullname"></div>
-  <div class="username"></div>
+  <div class="fullname"><%= current_user.get("fullname") %></div>
+  <div class="username"><%= current_user.get("_username") %></div>
 </section>
 
 <section class="bottom titles">
@@ -14,7 +13,15 @@
 </section>
 
 <section class="bottom counts">
-  <div class="post count"></div>
-  <div class="following count"></div>
-  <div class="follower count"></div>
+  <div class="post count"><%= current_user.get("post_count") %></div>
+  <div class="following count"><%= current_user.get("follower_count") %></div>
+  <div class="follower count"><%= current_user.get("following_count") %></div>
 </section>
+
+<form action="#">
+  <input type="hidden"
+    name="post[parent_post_id]">
+  <textarea
+    placeholder="Compose new Post..."
+    name="post[content]"></textarea>
+</form>

@@ -1,4 +1,5 @@
 class UserFollow < ActiveRecord::Base
+  validates :followed_user, uniqueness: {scope: :follower}
   belongs_to :followed_user,
     class_name: "User",
     foreign_key: :user_id,
