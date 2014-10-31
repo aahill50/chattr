@@ -1,4 +1,4 @@
-window.Chattr = {
+.window.Chattr = {
   Models: {},
   Collections: {},
   Views: {},
@@ -11,5 +11,5 @@ window.Chattr = {
 };
 
 $(document).ready(function(){
-  Chattr.initialize();
+  // Chattr.initialize();
 });

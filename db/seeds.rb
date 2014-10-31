@@ -18,64 +18,62 @@
 #
 # UserFollow.create(user_id: , follower_id: )
 
-User.create(username:"user1",
-            fullname:"User One",
-            email:"userone@example.com",
-            bio:"I am user one!",
+10.times do
+  fname = Faker::Name.name
+  uname = Faker::Internet.user_name(fname)
+  eml = Faker::Internet.safe_email(fname)
+
+  User.create(fullname: fname,
+              username: uname,
+              email: eml,
+              bio: Faker::Company.catch_phrase,
+              password:"password")
+end
+
+User.create(username:"aaron",
+            fullname:"Aaron Hill",
+            email:"aaron@example.com",
+            bio:"I made this!",
             password:"password")
 
-User.create(username:"user2",
-            fullname:"User Two",
-            email:"usertwo@example.com",
-            bio:"User Two checking in!",
-            password:"password")
+100.times do
+  Post.create(content:Faker::Lorem.sentence,
+              user_id: (1..11).to_a.sample)
+end
 
-User.create(username:"user3",
-            fullname:"User Three",
-            email:"userthree@example.com",
-            bio:"Hey there! It's User Three!",
-            password:"password")
+30.times do
+  uf = UserFollow.new(user_id: (1..11).to_a.sample, follower_id: (1..11).to_a.sample  )
+  uf.save unless uf.user_id == uf.follower_id
+end
 
-User.create(username:"user4",
-            fullname:"User Four",
-            email:"userfour@example.com",
-            bio:"I am User #4.",
-            password:"password")
-
-User.create(username:"user5",
-            fullname:"user five",
-            email:"userfive@example.com",
-            bio:"i like turtles",
-            password:"password")
-
-Post.create(content:"what's the weather like?",
-            user_id: 1)
-
-Post.create(content:"sunny!",
-            user_id: 2,
-            parent_post_id: 1)
-
-Post.create(content:"rainy :(",
-            user_id: 3,
-            parent_post_id: 1)
-
-Post.create(content:"who likes turtles?",
-            user_id: 2)
-
-Post.create(content:"me!",
-            user_id: 5,
-            parent_post_id: 4)
-
-Post.create(content:"cars and windows",
-            user_id: 4)
-
-Post.create(content:"raindrops and lollipops",
-            user_id: 3,
-            parent_post_id: 6)
-
-Post.create(content:"eat ALL the things",
-            user_id: 4)
-
-Post.create(content:"pizza.",
-            user_id: 5)
+# Post.create(content:"what's the weather like?",
+#             user_id: 1)
+#
+# Post.create(content:"sunny!",
+#             user_id: 2,
+#             parent_post_id: 1)
+#
+# Post.create(content:"rainy :(",
+#             user_id: 3,
+#             parent_post_id: 1)
+#
+# Post.create(content:"who likes turtles?",
+#             user_id: 2)
+#
+# Post.create(content:"me!",
+#             user_id: 5,
+#             parent_post_id: 4)
+#
+# Post.create(content:"cars and windows",
+#             user_id: 4)
+#
+# Post.create(content:"raindrops and lollipops",
+#             user_id: 3,
+#             parent_post_id: 6)
+#
+# Post.create(content:"eat ALL the things",
+#             user_id: 4)
+#
+# Post.create(content:"pizza.",
+#             user_id: 5)
 
