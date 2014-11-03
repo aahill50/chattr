@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
     else
       flash.now[:errors] = ["Unable to sign in with those credentials."]
       @user = User.new
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

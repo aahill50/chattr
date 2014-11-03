@@ -48,5 +48,10 @@ Backbone.CompositeView = Backbone.View.extend({
       this._subviews[selector] = this._subviews[selector] || [];
       return this._subviews[selector];
     }
-  }
+  },
+
+  renderSiteHeader: function () {
+    var siteHeader = new Chattr.Views.SiteHeader({ model: this.model });
+    this.addSubview('#body-top', siteHeader);
+  },
 });

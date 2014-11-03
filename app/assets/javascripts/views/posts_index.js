@@ -1,17 +1,23 @@
-Chattr.Views.PostsIndex = Backbone.CompositeView.extend({
-  initialize: function () {
-    this.listenTo(this.collection, "sync", this.render)
+Chattr.Views.PostsIndex = Backbone.View.extend({
+  initialize: function (options) {
+    this.posts = options.posts;
+    this.currentUser = options.currentUser;
+    // this.listenTo(this.posts, "sync", this.render)
+    // this.listenTo(this.currentUser, "sync", this.render)
   },
-
-  tagName: "section",
-
-  className: "post-container",
 
   template: JST["posts/index"],
 
+  tagName: 'section',
+
+  id: 'body-bottom',
+
   render: function () {
-    var content = this.template({ posts: this.collection })
-    this.$el.html(content)
+    var content = this.template({
+      posts: this.posts,
+      currentUser: this.currentUser
+    });
+    this.$el.html(content);
     return this;
-  }
+  },
 });

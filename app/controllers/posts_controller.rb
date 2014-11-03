@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_filter :require_signed_in
+  before_filter :require_signed_in!
 
   def index
     @posts = current_user.main_feed_posts
@@ -10,11 +10,11 @@ class PostsController < ApplicationController
     @post = current_user.posts.new
     render :new
   end
-  
+
   def reply
     @post = current_user.posts.new
     @post.parent_post_id = params[:post][:parent_post_id]
-    render :new    
+    render :new
   end
 
   def create

@@ -8,11 +8,17 @@
 </head>
 <body>
 
-<%= render 'shared/site_header' %>
-
-<%= render 'shared/flash_messages' %>
 <main id="all-content">
-  <%= yield %>
+
+  <section id="body-top">
+    <%= render 'shared/site_header' %>
+    <%= render 'shared/flash_messages' %>
+  </section>
+
+  <section id="body-bottom">
+    <%= yield %>
+  </section>
+
 </main>
 
 </body>

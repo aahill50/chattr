@@ -7,23 +7,24 @@ Chattr.Views.MainFeed = Backbone.CompositeView.extend({
 
   tagName: 'main',
 
-  className: 'main-content',
+  id: 'main-content',
 
   render: function () {
     var content = this.template();
     this.$el.html(content);
+    $('#inner-content').empty();
     this.renderIndexProfile();
-    this.renderPosts()
+    this.renderPosts();
     return this;
   },
 
   renderIndexProfile: function () {
     var indexProfile = new Chattr.Views.IndexProfile({ model: this.model });
-    this.addSubview('.index-profile', indexProfile)
+    this.addSubview('#inner-content', indexProfile);
   },
 
   renderPosts: function () {
     var postsIndex = new Chattr.Views.PostsIndex({ collection: this.collection })
-    this.addSubview('.post-container', postsIndex)
+    this.addSubview('#inner-content', postsIndex);
   }
 });

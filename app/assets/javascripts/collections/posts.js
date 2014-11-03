@@ -1,7 +1,7 @@
 Chattr.Collections.Posts = Backbone.Collection.extend({
   model: Chattr.Models.Post,
 
-  url: 'api/posts',
+  url: '/api/posts',
 
   // feed_posts: function (posts) {
   //   console.log(posts)

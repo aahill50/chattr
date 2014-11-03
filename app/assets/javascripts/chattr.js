@@ -4,12 +4,17 @@ window.Chattr = {
   Views: {},
   Routers: {},
   initialize: function() {
-    // Backbone.current_user = current_us
     new Chattr.Routers.AppRouter();
-    Backbone.history.start();
+    var posts = new Chattr.Collections.Posts;
+    posts.fetch({
+      success: function () {
+        Backbone.history.start();
+      }
+    })
   }
 };
 
 $(document).ready(function(){
-  // Chattr.initialize();
+  Chattr.initialize();
 });
+

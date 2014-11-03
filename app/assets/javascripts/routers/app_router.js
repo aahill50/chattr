@@ -1,45 +1,57 @@
 Chattr.Routers.AppRouter = Backbone.Router.extend({
   initialize: function (options) {
+    this.users = new Chattr.Collections.Users();
     this.posts = new Chattr.Collections.Posts();
-    this.$rootEl = $('#all-content')
+    this.currentUser = new Chattr.Models.CurrentUser();
+    this.$rootEl = $('#body-bottom')
+    // this.updateHeader();
   },
 
   routes: {
-    "": "mainFeed",
-    // "": "postsIndex",
+    "": "postsIndex",
+    "users/:id": "userShow",
     // "posts/:id": "postShow"
   },
 
-  mainFeed: function () {
-    var current_user = new Chattr.Models.CurrentUser()
-    var posts = this.posts
-    current_user.fetch()
-    posts.fetch();
-
-    var mainFeedView = new Chattr.Views.MainFeed({
-      collection: posts,
-      model: current_user
+  updateHeader: function () {
+    var that = this;
+    this.currentUser.fetch({
+      success: function () {
+        var siteHeaderView = new Chattr.Views.SiteHeader({ model: that.currentUser })
+        $('header#site-header').html(siteHeaderView.render().$el)
+      }
     });
-    this._swapView(mainFeedView)
   },
 
-  // postsIndex: function () {
-  //   var posts = this.posts
-  //   posts.fetch();
-  //
-  //   var indexView = new Chattr.Views.PostsIndex({
-  //     collection: posts
-  //   });
-  //   $el = $('#all-content');
-  //   this._swapView(indexView, $el);
-  // },
-  //
-  // postShow: function (id) {
-  //   var post = this.posts.getOrFetch(id);
-  //   var showView = new Chattr.Views.PostShow({ model: post });
-  //   $el = $('.post-container')
-  //   this._swapView(showView, $el);
-  // },
+  postsIndex: function () {
+    var that = this;
+    var posts = this.posts;
+    posts.fetch();
+
+    this.currentUser.fetch({
+      success: function () {
+        var postsIndexView = new Chattr.Views.PostsIndex({
+          posts: posts,
+          currentUser: that.currentUser
+        });
+        that._swapView(postsIndexView)
+      }
+    });
+
+
+  },
+
+  userShow: function (id) {
+    this.currentUser.fetch();
+    this.posts.fetch();
+    var user = this.users.getOrFetch(id);
+    var userShowView = new Chattr.Views.UserShow({
+      user: user,
+      currentUser: this.currentUser,
+      collection: this.posts
+    })
+    this._swapView(userShowView);
+  },
 
   _swapView: function (view) {
     this._currentView && this._currentView.remove()

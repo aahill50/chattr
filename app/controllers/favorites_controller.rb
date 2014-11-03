@@ -6,7 +6,7 @@ class FavoritesController < ApplicationController
 
   def create
     current_user.favorites.create(favorite_params)
-    redirect_to posts_url
+    redirect_to :back
   end
 
   def destroy

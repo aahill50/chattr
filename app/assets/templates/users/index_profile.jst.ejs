@@ -1,19 +1,19 @@
-  <section class="top">
-    <div class="avatar"></div>
-  </section>
-  <section class="names">
-    <div class="fullname"><%= posts.get("current_user").fullname %></div>
-    <div class="username"><%= posts.current_user()._username() %></div>
-  </section>
+<section class="top">
+  <div class="avatar"></div>
+</section>
+<section class="names">
+  <div class="fullname"><%= posts.get("current_user").fullname %></div>
+  <div class="username"><%= posts.current_user()._username() %></div>
+</section>
 
-  <section class="bottom titles">
-    <div class="count-title">POSTS</div>
-    <div class="count-title">FOLLOWING</div>
-    <div class="count-title">FOLLOWERS</div>
-  </section>
+<section class="bottom titles">
+  <div class="count-title">POSTS</div>
+  <div class="count-title">FOLLOWING</div>
+  <div class="count-title">FOLLOWERS</div>
+</section>
 
-  <section class="bottom counts">
-    <div class="post count"><%= posts.current_user().post_count %></div>
-    <div class="following count"><%= posts.current_user().following_count %></div>
-    <div class="follower count"><%= posts.current_user().follower_count %></div>
-  </section>
+<section class="bottom counts">
+  <div class="post count"><%= posts.current_user().post_count %></div>
+  <div class="following count"><%= posts.current_user().following_count %></div>
+  <div class="follower count"><%= posts.current_user().follower_count %></div>
+</section>

@@ -1,3 +1,3 @@
 Chattr.Models.CurrentUser = Backbone.Model.extend({
-  urlRoot: '/api/users/current_user'
+  url: '/api/users/current_user'
 })
