@@ -2,8 +2,9 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
   initialize: function (options) {
     this.user = options.user;
     this.currentUser = options.currentUser;
-    this.collection = options.collection
+    this.posts = options.posts
     this.listenTo(this.currentUser, "sync", this.render)
+    this.listenTo(this.user, "sync", this.render)
   },
 
   template: JST["users/show"],
@@ -15,16 +16,11 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
   render: function () {
     var content = this.template({
       user: this.user,
-      currentUser: this.currentUser
+      currentUser: this.currentUser,
+      posts: this.posts
     })
 
     this.$el.html(content);
-    this.renderUserPosts();
     return this;
-  },
-
-  renderUserPosts: function () {
-    var postsIndex = new Chattr.Views.PostsIndex({ collection: this.collection })
-    this.addSubview('#inner-content', postsIndex);
   }
 });

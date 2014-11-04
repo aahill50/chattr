@@ -2,7 +2,7 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
   initialize: function (options) {
     this.currentUser = new Chattr.Models.CurrentUser();
     this.$rootEl = $('#body-bottom')
-    // this.updateHeader();
+    this.updateHeader();
   },
 
   routes: {
@@ -39,15 +39,19 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
   },
 
   userShow: function (id) {
-    this.currentUser.fetch();
+    var that = this;
     var user = Chattr.Collections.users.getOrFetch(id);
-		
-    var userShowView = new Chattr.Views.UserShow({
-      user: user,
-      currentUser: this.currentUser,
-      posts: user.posts()
-    })
-    this._swapView(userShowView);
+
+    this.currentUser.fetch({
+      success: function () {
+        var userShowView = new Chattr.Views.UserShow({
+          user: user,
+          currentUser: that.currentUser,
+          posts: user.posts()
+        })
+        that._swapView(userShowView);
+      }
+    });
   },
 
   _swapView: function (view) {

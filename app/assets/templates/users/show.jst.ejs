@@ -1,4 +1,3 @@
-<% debugger %>
 <section class="profile-banner">
 	<figure class="banner">
 	</figure>
@@ -39,11 +38,59 @@
 		<figure class="avatar-large">
 			<div></div>
 		</figure>
-	  <div class="fullname"><%= user.get("fullname") %></div>
-	  <div class="username"><%= user.get("_username") %></div>
-	  <div class="join-date">Joined <%= user.get("join_date") %></div>
-	  <div class="bio"><%= user.get("bio") %></div>
+	  <div class="fullname"><%= currentUser.get("fullname") %></div>
+	  <div class="username"><%= currentUser.get("_username") %></div>
+	  <div class="join-date">Joined <%= currentUser.get("join_date") %></div>
+	  <div class="bio"><%= currentUser.get("bio") %></div>
 	  <% if (currentUser.id !== user.id) { %>
 	    User follow form
 	  <% } %>
 	</section>
+</main>
+
+<section class="post-container">
+	<header class="title"><h2>Posts BACKBONE</h2></header>
+
+	<% posts.each( function(post) { %>
+	<article class="post">
+		<figure class="avatar">
+		</figure>
+		<section class="post-info group">
+			<div class="fullname"><%= post.author().get("fullname") %></div>
+			<div class="username"><%= post.author()._username() %></div>
+			<div class="timestamp"><%= post.get("timestamp") %></div>
+		</section>
+
+		<section class="post-container">
+			<section class="post-content">
+				<div class="text"><%= post.get("content") %></div>
+				<section class="buttons-container">
+					<form action="#">
+						<input type="hidden"
+									name="post[parent_post_id]"
+									value="<%= post.id %>">
+						<button class="reply post-option">Reply</button>
+					</form>
+
+					<form action="#">
+						<input type="hidden"
+									name="post[content]">
+						<button class="repost post-option">Repost</button>
+					</form>
+
+					<form action="#">
+						<input type="hidden"
+									name="fav[favoriteable_id]"
+									value="<%= post.id %>">
+						<input type="hidden"
+									name="fav[favoriteable_type]"
+									value="Post">
+						<button class="favorite post-option">Favorite</button>
+					</form>
+				</section>
+			</section>
+		</section>
+
+	</article>
+	<% }) %>
+</section>
