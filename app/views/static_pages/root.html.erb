@@ -1,0 +1,39 @@
+<div id="body-top">
+  <header id="site-header" class="site-header group">
+    <% if signed_in? %>
+      <ul class="site-header-nav">
+        <li class="left"><a href="<%= posts_url %>">Home</a></li>
+        <li class="left"><a href="#">Notifications</a></li>
+        <li class="left"><a href="#">Messages</a></li>
+        <li class="right"><a href="<%= new_post_url %>">New Post</a></li>
+        <li class="right">
+          <form action="<%= session_url %>" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <%= render 'shared/auth_token' %>
+            <button class="sign-out">Sign Out</button>
+          </form>
+        </li>
+        <li class="right">
+          <a href="<%= user_url(current_user) %>">
+          <%= current_user._username %>
+          </a>
+        </li>
+        <li class="right">
+          <form action="<%= user_search_url %>" class="search-chattr" method="POST">
+            <%= render 'shared/auth_token' %>
+            <input type="search" name="search[string]" placeholder="Search chattr">
+          </form>
+        </li>
+        <li class="middle"><h1>chattr</h1></li>
+      </ul>
+    <% else %>
+      <a href="<%= new_session_url %>" class="right">Sign In</a>
+      <a href="<%= new_user_url %>" class="right">Sign Up</a>
+  <% end %>
+  </header>
+</div>
+
+<main class="main-content">
+  <section class="index-profile"></section>
+  <section class="post-container"></section>
+</main>

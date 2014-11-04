@@ -1,3 +1,4 @@
+<% debugger %>
 <section class="profile-banner">
 	<figure class="banner">
 	</figure>
@@ -24,7 +25,6 @@
 			<li class="left">
         <a href="#">Favorite Users</a>
       </li>
-
 			<% if (currentUser.id === user.id) { %>
 			  <li class="right">
 					<a href="#">Edit</a>
@@ -39,10 +39,10 @@
 		<figure class="avatar-large">
 			<div></div>
 		</figure>
-	  <div class="fullname"><%= user.fullname %></div>
-	  <div class="username"><%= user._username() %></div>
-	  <div class="join-date">Joined <%= user.join_date %></div>
-	  <div class="bio"><%= user.bio %></div>
+	  <div class="fullname"><%= user.get("fullname") %></div>
+	  <div class="username"><%= user.get("_username") %></div>
+	  <div class="join-date">Joined <%= user.get("join_date") %></div>
+	  <div class="bio"><%= user.get("bio") %></div>
 	  <% if (currentUser.id !== user.id) { %>
 	    User follow form
 	  <% } %>

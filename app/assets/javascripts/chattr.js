@@ -5,8 +5,11 @@ window.Chattr = {
   Routers: {},
   initialize: function() {
     new Chattr.Routers.AppRouter();
-    var posts = new Chattr.Collections.Posts;
-    posts.fetch({
+    Chattr.Collections.posts = new Chattr.Collections.Posts;
+		Chattr.Collections.users = new Chattr.Collections.Users;
+		Chattr.Collections.posts.fetch();
+		
+    Chattr.Collections.users.fetch({
       success: function () {
         Backbone.history.start();
       }
