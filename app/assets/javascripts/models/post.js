@@ -11,11 +11,18 @@ Chattr.Models.Post = Backbone.Model.extend({
 
   parse: function (resp) {
   //   console.log("debugging post mode")
-  //   debugger
+    if (resp.favorites) {
+    }
     if (resp.author) {
       this.author(resp.author).set(this._author, { parse: true })
       delete resp.author
     }
     return resp
+  },
+
+  formatForRP: function() {
+    var content = this.get("content");
+    var author = this.get("author_username");
+    return "rp-" + author + ": " + content
   }
 });

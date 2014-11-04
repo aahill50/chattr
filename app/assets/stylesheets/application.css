@@ -38,6 +38,22 @@ body {
   background: #fff;
 }
 
+.repost-form {
+  display: block;
+}
+
+.reply-form {
+  display: block;
+}
+
+.repost-form.closed {
+  display: none;
+}
+
+.reply-form.closed {
+  display: none;
+}
+
 ul {
   list-style: none;
 }
@@ -194,11 +210,33 @@ ul {
   position: absolute;
   float: left;
   width: 270px;
-  bottom: 0;
+  height: 120px;
+  top: 230px;
   background: #E3F3F8;
   border-radius: 0 0 5px 5px;
   padding: 10px;
   border-top: 1px solid #BDE5EE;
+  transition: height .2s;
+}
+
+.index-profile form.closed {
+  position: absolute;
+  float: left;
+  width: 270px;
+  height: 40px;
+  top: 230px;
+  background: #E3F3F8;
+  border-radius: 0 0 5px 5px;
+  padding: 10px;
+  border-top: 1px solid #BDE5EE;
+}
+
+.index-profile form.closed button {
+  display: block;
+}
+
+.index-profile form.closed button {
+  display: none;
 }
 
 .index-profile form textarea {
@@ -211,7 +249,7 @@ ul {
   padding: 10px;
 }
 
-.post-container {
+.posts-container {
   margin: 10px auto;
   position: relative;
   width: 560px;
@@ -244,7 +282,7 @@ ul {
 	border-radius: 5px;
 }
 
-.post-container h2 {
+.posts-container h2 {
   position: relative;
   font-size: 20px;
   border-bottom: 1px solid #ccc;

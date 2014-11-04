@@ -12,6 +12,7 @@ Chattr::Application.routes.draw do
     get 'users/current_user', to: 'users#current'
     resources :users
     resources :posts
+    resources :favorites, only: [:index, :show, :create, :destroy]
   end
 
   post 'users/search', to: 'users#search', as: 'user_search'
