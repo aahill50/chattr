@@ -8,6 +8,7 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
   routes: {
     "": "postsIndex",
     "users/:id": "userShow",
+		"signin": "signIn"
     // "posts/:id": "postShow"
   },
 
@@ -34,8 +35,6 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
         that._swapView(postsIndexView)
       }
     });
-
-
   },
 
   userShow: function (id) {
@@ -53,6 +52,11 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
       }
     });
   },
+
+	signIn: function () {
+		var sessionNewView = new Chattr.Views.SessionNew();
+		$('body').html(sessionNewView.render().$el);
+	},
 
   _swapView: function (view) {
     this._currentView && this._currentView.remove()
