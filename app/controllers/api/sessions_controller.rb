@@ -12,17 +12,15 @@ module Api
 
       if user
         sign_in!(user)
-        redirect_to :root
+        render json: user
       else
-        flash.now[:errors] = ["Unable to sign in with those credentials."]
-        @user = User.new
-        render :new, status: :unprocessable_entity
+        render text: "Unable to sign in", status: :unprocessable_entity
       end
     end
 
     def destroy
       sign_out!
-      render json: "signed out successfully"
+      render text: "signed out successfully"
     end
   end
 end

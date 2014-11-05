@@ -1,25 +1,37 @@
 Chattr.Routers.AppRouter = Backbone.Router.extend({
   initialize: function (options) {
+    var router = this;
     this.currentUser = new Chattr.Models.CurrentUser();
+
+    this.currentUser.fetch({
+      success: function () {
+        router.updateHeader(true);
+        router.navigate("/posts", { trigger: true })
+      },
+      error: function () {
+        router.updateHeader(false);
+        router.navigate("/", { trigger: true })
+      }
+    })
     this.$rootEl = $('#body-bottom')
-    this.updateHeader();
   },
 
   routes: {
-    "": "postsIndex",
+    "posts": "postsIndex",
     "users/:id": "userShow",
-		"signin": "signIn"
+		"session/new": "signIn"
     // "posts/:id": "postShow"
   },
 
-  updateHeader: function () {
-    var that = this;
-    this.currentUser.fetch({
-      success: function () {
-        var siteHeaderView = new Chattr.Views.SiteHeader({ model: that.currentUser })
-        $('header#site-header').html(siteHeaderView.render().$el)
-      }
-    });
+  updateHeader: function (is_signedIn) {
+    if (is_signedIn) {
+      var siteHeaderView = new Chattr.Views.SiteHeader({ model: this.currentUser })
+      $('header#site-header').html(siteHeaderView.render().$el)
+    } else {
+      var siteHeaderView = new Chattr.Views.SiteHeader({ model: null })
+      $('header#site-header').html(siteHeaderView.render().$el)
+    }
+
   },
 
   postsIndex: function () {
@@ -28,6 +40,7 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
 
     this.currentUser.fetch({
       success: function () {
+        that.updateHeader(true)
         var postsIndexView = new Chattr.Views.PostsIndex({
           posts: Chattr.Collections.posts,
           currentUser: that.currentUser
@@ -54,8 +67,9 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
   },
 
 	signIn: function () {
+    this.updateHeader(false)
 		var sessionNewView = new Chattr.Views.SessionNew();
-		$('body').html(sessionNewView.render().$el);
+    this._swapView(sessionNewView);
 	},
 
   _swapView: function (view) {

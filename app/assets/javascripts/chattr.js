@@ -9,11 +9,7 @@ window.Chattr = {
 		Chattr.Collections.users = new Chattr.Collections.Users;
 		Chattr.Collections.posts.fetch();
 
-    Chattr.Collections.users.fetch({
-      success: function () {
-        Backbone.history.start();
-      }
-    })
+    Backbone.history.start({pushState: true});
   }
 };
 

@@ -79,18 +79,15 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
       favoriteable_id: post.id
     }
     var favorites = new Chattr.Collections.Favorites
-
     favorites.fetch({
-      success: function() {
-        var favorite = favorites.where( fav_options )
-
-        if (favorite.length > 0) {
-          favorites.remove(favorites.where(fav_options));
+      success: function () {
+        var fav = favorites.findWhere(fav_options)
+        if (fav) {
+          fav.destroy();
         } else {
-          favorites.create(fav_options);
+          favorites.create(fav_options)
         }
       }
     })
   }
-
 });
