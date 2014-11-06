@@ -6,11 +6,11 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
     this.currentUser.fetch({
       success: function () {
         router.updateHeader(true);
-        router.navigate("/posts", { trigger: true })
+        router.navigate("", { trigger: true })
       },
       error: function () {
         router.updateHeader(false);
-        router.navigate("/", { trigger: true })
+        // router.navigate("/signin", { trigger: true })
       }
     })
     this.$rootEl = $('#body-bottom')
@@ -53,6 +53,7 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
   userShow: function (id) {
     var that = this;
     var user = Chattr.Collections.users.getOrFetch(id);
+    user.fetch();
 
     this.currentUser.fetch({
       success: function () {

@@ -13,13 +13,16 @@ module Api
     def create
       @post = current_user.posts.new(post_params)
       if @post.save
-        render json: @post
+        render partial: 'api/posts/post', locals: { post: @post }
       else
         render json: @post.errors.full_messages, status: :unprocessable_entity
       end
     end
 
     def destroy
+      @post = current_user.posts.find(params[:id])
+      current_user.posts.destroy(@post)
+      render text: "post has been deleted"
     end
 
     private

@@ -25,23 +25,28 @@
       name="post[content]"></textarea>
       <button class="inactive">Post!</button>
   </form>
-
+  <span class="char-counter"></span>
 </section>
 
 <section class="posts-container">
   <header class="title"><h2>Posts BACKBONE</h2></header>
 
   <% posts.each( function(post) { %>
-  <article class="post"data-id="<%= post.id %>">
+  <article class="post group"data-id="<%= post.id %>">
     <figure class="avatar">
     </figure>
-    <section class="post-info group">
-      <div class="fullname"><%= post.author().get("fullname") %></div>
-      <div class="username"><%= post.author()._username() %></div>
-      <div class="timestamp"><%= post.get("timestamp") %></div>
-    </section>
 
     <section class="post-container">
+      <section class="post-info">
+        <div class="fullname"><%= post.author().get("fullname") %></div>
+        <div class="username"><%= post.author()._username() %></div>
+        <div class="timestamp"><%= post.get("timestamp") %></div>
+      </section>
+
+      <% if (post.author().id === currentUser.id ) { %>
+        <span class="delete-post">&times;</span>
+      <% } %>
+
       <section class="post-content">
         <div class="text"><%= post.get("content") %></div>
 
@@ -69,31 +74,37 @@
                    name="fav[favoriteable_type]"
                    value="Post">
             <button class="favorite post-option"
-              data-post-id="<%= post.id %>">Favorite</button>
+              data-post-id="<%= post.id %>">
+              <% if (post.get("favorited")) { %>
+                Unfavorite
+              <% } else { %>
+                Favorite
+              <% } %>
+            </button>
           </form>
         </section>
 
+        <form class="new-post reply-form closed">
+          <input type="hidden"
+                 name="post[parent_post_id]"
+                 value="<%= post.id %>">
+          <textarea
+            class="new-inline-post closed"
+            name="post[content]"
+            placeholder="Reply to this post..."></textarea>
+          <button>Post Reply!</button>
+        </form>
+
+        <form class="new-post repost-form closed">
+          <textarea
+            class="new-inline-post"
+            name="post[content]"><%= post.formatForRP() %></textarea>
+          <button>Post!</button>
+        </form>
+        <span class="char-counter"></span>
+
       </section>
     </section>
-
-    <form class="new-post reply-form closed">
-      <input type="hidden"
-             name="post[parent_post_id]"
-             value="<%= post.id %>">
-      <textarea
-        class="new-inline-post closed"
-        name="post[content]"
-        placeholder="Reply to this post..."></textarea>
-      <button>Post Reply!</button>
-    </form>
-
-    <form class="new-post repost-form closed">
-      <textarea
-        class="new-inline-post"
-        name="post[content]"><%= post.formatForRP() %></textarea>
-      <button>Post!</button>
-    </form>
-
   </article>
   <% }) %>
 </section>

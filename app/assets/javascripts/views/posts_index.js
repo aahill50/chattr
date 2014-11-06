@@ -1,8 +1,11 @@
 Chattr.Views.PostsIndex = Backbone.View.extend({
   initialize: function (options) {
     this.posts = options.posts;
+    this.favs = new Chattr.Collections.Favorites;
+    this.favs.fetch();
     this.currentUser = options.currentUser;
-    this.listenTo(this.posts, "sync", this.render);
+    this.listenTo(this.posts, "add remove", this.render);
+    this.listenTo(this.favs, "add remove sync", this.render);
   },
 
   events: {
@@ -11,7 +14,10 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     "blur .index-profile": "closeForm",
     "click button.reply": "setupReply",
     "click button.repost": "setupRepost",
+    "keyup .post .new-post": "updateCharCounter",
+    "keyup .new-post": "updateProfileCharCounter",
     "click button.favorite": "toggleFavorite",
+    "click .delete-post": "deletePost"
   },
 
   template: JST["posts/index"],
@@ -32,12 +38,16 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   submitNewPost: function (event) {
     event.preventDefault();
     var that = this;
+    var $post = $(event.currentTarget).closest('.post');
 
-    params = $(event.currentTarget).serializeJSON()['post']
+    var params = $(event.currentTarget).serializeJSON()['post']
     var post = new Chattr.Models.Post(params)
+
     post.save([],{
-      success: function () {
-        that.posts.add(post)
+      success: function (data) {
+        that.posts.add(post )
+        $post.find('.repost-form').addClass("closed");
+        $post.find('.reply-form').addClass("closed");
       }
     })
   },
@@ -48,6 +58,9 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
 
   closeForm: function (event) {
     $(event.target).closest('form').addClass("closed");
+    var $profile = $(event.target).closest('.index-profile')
+    var $charCounter = $profile.find('.char-counter')
+    $charCounter.text("")
   },
 
   setupRepost: function (event) {
@@ -72,22 +85,42 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     event.preventDefault();
     var postId = $(event.currentTarget).data("post-id");
     var post = this.posts.getOrFetch(postId);
+    var that = this;
 
     var fav_options = {
       user_id: this.currentUser.id,
       favoriteable_type: "Post",
       favoriteable_id: post.id
     }
-    var favorites = new Chattr.Collections.Favorites
-    favorites.fetch({
-      success: function () {
-        var fav = favorites.findWhere(fav_options)
-        if (fav) {
-          fav.destroy();
-        } else {
-          favorites.create(fav_options)
-        }
-      }
-    })
+
+    if(post.get("favorited")) {
+      var fav = this.favs.get(post.get("favorite_id"))
+      fav.destroy();
+    } else {
+      this.favs.create(fav_options)
+    }
+
+
+  },
+
+  deletePost: function (event) {
+    event.preventDefault();
+    var postId = $(event.currentTarget).closest('.post').data('id')
+    var post = this.posts.get(postId);
+    post.destroy();
+  },
+
+  updateCharCounter: function (event) {
+    var $post = $(event.target).closest('.post')
+    var $charCounter = $post.find('.char-counter')
+    var charsLeft = 141 - $(event.target).val().length;
+    $charCounter.text(charsLeft + " characters remaining")
+  },
+
+  updateProfileCharCounter: function (event) {
+    var $profile = $(event.target).closest('.index-profile')
+    var $charCounter = $profile.find('.char-counter')
+    var charsLeft = 141 - $(event.target).val().length;
+    $charCounter.text(charsLeft + " characters remaining")
   }
 });

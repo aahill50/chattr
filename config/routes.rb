@@ -10,6 +10,7 @@ Chattr::Application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     get 'users/current_user', to: 'users#current'
+    post 'users/search', to: 'users#search', as: 'user_search'
     resources :users
     resources :posts
     resources :favorites, only: [:index, :show, :create, :destroy]

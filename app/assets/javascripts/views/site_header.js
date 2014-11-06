@@ -7,7 +7,8 @@ Chattr.Views.SiteHeader = Backbone.View.extend ({
   },
 
 	events: {
-		"click .sign-out": "signOut"
+		"click .sign-out": "signOut",
+    "keyup #search": "search"
 	},
 
   template: function(options) {
@@ -48,5 +49,25 @@ Chattr.Views.SiteHeader = Backbone.View.extend ({
 			}
 		})
 	},
+
+  search: function (event) {
+    event.preventDefault();
+    var params = $(event.currentTarget).serializeJSON()
+
+    if (params['search']['string'].length >= 3) {
+      $.ajax({
+        url: 'api/users/search',
+        data: params,
+        type: 'POST',
+        success: function (data) {
+          console.log(data)
+        },
+        error: function () {
+          console.log("error searching... ")
+        }
+      })
+    }
+
+  }
 
 })

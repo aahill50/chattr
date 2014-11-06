@@ -92,6 +92,10 @@ class User < ActiveRecord::Base
       SQL
   end
 
+  def favorited?(post)
+    self.favorite_posts.include?(post)
+  end
+
   def join_date
     self.created_at.to_formatted_s(:short).split.first(2).reverse.join(' ')
   end

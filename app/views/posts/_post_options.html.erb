@@ -15,5 +15,11 @@
   <%= render 'shared/auth_token' %>
   <input type="hidden" name="fav[favoriteable_id]" value="<%= post.id %>">
   <input type="hidden" name="fav[favoriteable_type]" value="Post">
-  <button class="post-option">Favorite</button>
+  <button class="post-option">
+    <% if current_user.favorited?(post) %>
+      Unfavorite
+    <% else %>
+      Favorite
+    <% end %>
+  </button>
 </form>

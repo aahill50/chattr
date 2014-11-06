@@ -12,12 +12,34 @@
  *= require_tree .
  */
 
-body, html, header, ul, li, a, div, section, article, form, h1, h2, figure {
+body, html, header, ul, li, a, div, section, article, form, h1, h2, figure, button {
   padding: 0;
   margin: 0;
   border: 0;
   font: inherit;
   background: inherit;
+}
+
+button {
+  font-size: 12px;
+  background: #78BCF8;
+  padding: 5px 5px;
+  border-radius: 5px;
+  color: #222;
+  font-weight: bold;
+  cursor: pointer;
+  outline: 0;
+}
+
+input[type='text'],
+input[type='password'],
+textarea {
+  -webkit-appearance: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  background: white;
 }
 
 body {
@@ -36,22 +58,6 @@ body {
   border-bottom: 2px solid #6298C8;
   width: 100%;
   background: #fff;
-}
-
-.repost-form {
-  display: block;
-}
-
-.reply-form {
-  display: block;
-}
-
-.repost-form.closed {
-  display: none;
-}
-
-.reply-form.closed {
-  display: none;
 }
 
 ul {
@@ -130,11 +136,11 @@ ul {
 }
 
 .index-profile {
-  position: relative;
+  position: absolute;
   width: 290px;
   height: 290px;
   margin: 0 5px;
-  float: left;
+  left: 0;
   background: white;
   border-radius: 5px;
   z-index: -5;
@@ -215,6 +221,7 @@ ul {
   background: #E3F3F8;
   border-radius: 0 0 5px 5px;
   padding: 10px;
+  padding-bottom: 25px;
   border-top: 1px solid #BDE5EE;
   transition: height .2s;
 }
@@ -239,6 +246,15 @@ ul {
   display: none;
 }
 
+.index-profile form button {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .index-profile form textarea {
   display: inline-block;
   border: 1px solid #BDE5EE;
@@ -249,6 +265,13 @@ ul {
   padding: 10px;
 }
 
+.index-profile .char-counter {
+  position: absolute;
+  top: 365px;
+  left: 10px;
+  background: orange;
+}
+
 .posts-container {
   margin: 10px auto;
   position: relative;
@@ -256,6 +279,45 @@ ul {
   background: transparent;
   border-radius: 5px;
   z-index: 200;
+}
+
+.repost-form, .reply-form {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  display: block;
+  width: 448px;
+  height: 100px;
+}
+
+.repost-form.closed, .reply-form.closed {
+  display: none;
+}
+
+.repost-form textarea, .reply-form textarea {
+  width: 100%;
+  height: 100px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.repost-form button, .reply-form button {
+  position: absolute;
+  display: inline-block;
+  float: right;
+  right: 20px;
+  bottom: 9px;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  outline: 0;
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 10px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .profile-banner {
@@ -308,13 +370,37 @@ article.post {
   margin-right: 10px;
 }
 
+.post {
+  position: relative;
+}
+
+.post .delete-post {
+  color: #888;
+  float: right;
+  position: absolute;
+  right: 7px;
+  top: 0;
+  font-weight: bold;
+  font-size: 20px;
+  display: none;
+  padding: 0 7px;
+}
+
+.post:hover .delete-post {
+  display: block;
+}
+
+.delete-post:hover {
+  cursor: pointer;
+  color: #555;
+}
+
 .post-info a {
   text-decoration: none;
   color: inherit;
 }
 
 .post .post-info {
-  margin-left: 10px;
   width: 100%;
   height: 20px;
   margin-bottom: 5px;
@@ -343,12 +429,21 @@ article.post {
   height: 20px;
 }
 
+.post-container {
+  float: left;
+  width: 480px;
+  left: 60px;
+  word-wrap: break-word;
+}
+
 .post-content a {
   text-decoration: none;
   color: black;
 }
 
 .buttons-container form {
+  padding-top: 10px;
+  margin-bottom: 10px;
   display: inline-block;
 }
 
