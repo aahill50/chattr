@@ -159,7 +159,6 @@ ul {
   width: 68px;
   height: 68px;
   border: 4px solid white;
-  background: orange;
   border-radius: 5px;
 }
 
@@ -337,11 +336,21 @@ ul {
 
 .main-user-info figure {
 	width: 200px;
-	height: 200px;
+	height: auto;
 	margin: 10px;
-	background: orange;
 	border: 5px solid #EEE;
 	border-radius: 5px;
+	background: #eee	;
+}
+
+.avatar-large {
+	cursor: pointer;
+}
+
+.main-user-info img {
+	height: 200px;
+	margin: 0 auto;
+	display: block;
 }
 
 .posts-container h2 {

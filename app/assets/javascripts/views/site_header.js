@@ -1,20 +1,12 @@
 Chattr.Views.SiteHeader = Backbone.View.extend ({
-  initialize: function () {
-    if (this.model) {
-      this.listenTo(this.model, "sync", this.render)
-    }
-
-  },
-
 	events: {
 		"click .sign-out": "signOut",
     "keyup #search": "search"
 	},
 
   template: function(options) {
-
-    if (options.currentUser) {
-      return JST["shared/site_header"]({currentUser: options.currentUser})
+    if (Chattr.currentUser) {
+      return JST["shared/site_header"]
     } else {
       return JST["shared/site_header_unsigned"]
     }
@@ -28,11 +20,7 @@ Chattr.Views.SiteHeader = Backbone.View.extend ({
   id: 'site-header',
 
   render: function () {
-    if (this.model) {
-      var content = this.template({ currentUser: this.model });
-    } else {
-      var content = this.template({ currentUser: null });
-    }
+    var content = this.template({ currentUser: Chattr.currentUser });
     this.$el.html(content);
     return this;
   },

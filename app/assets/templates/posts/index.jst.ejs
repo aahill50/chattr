@@ -3,8 +3,8 @@
     <div class="avatar"></div>
   </section>
   <section class="names">
-    <div class="fullname"><%= currentUser.get("fullname") %></div>
-    <div class="username"><%= currentUser.get("_username") %></div>
+    <div class="fullname"><%= currentUser.fullname %></div>
+    <div class="username"><%= currentUser._username %></div>
   </section>
 
   <section class="bottom titles">
@@ -14,9 +14,9 @@
   </section>
 
   <section class="bottom counts">
-    <div class="post count"><%= currentUser.get("post_count") %></div>
-    <div class="following count"><%= currentUser.get("following_count") %></div>
-    <div class="follower count"><%= currentUser.get("follower_count") %></div>
+    <div class="post count"><%= currentUser.post_count %></div>
+    <div class="following count"><%= currentUser.following_count %></div>
+    <div class="follower count"><%= currentUser.follower_count %></div>
   </section>
 
   <form class="new-post closed" action="#">

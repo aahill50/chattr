@@ -1,10 +1,12 @@
 Chattr.Views.UserShow = Backbone.CompositeView.extend({
   initialize: function (options) {
+		var that = this;
     this.user = options.user;
-    this.currentUser = options.currentUser;
+		this.user.fetch();
+		
     this.favs = new Chattr.Collections.Favorites;
     this.posts = options.posts;
-    this.listenTo(this.currentUser, "sync", this.render);
+		
     this.listenTo(this.user, "sync", this.render);
     this.listenTo(this.posts, "add remove sync", this.render);
     this.listenTo(this.favs, "add remove sync", this.render);
@@ -16,7 +18,8 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
     "click button.repost": "setupRepost",
     "click button.favorite": "toggleFavorite",
     "click .delete-post": "deletePost",
-    "keyup .reply-form, .repost-form": "updateCharCounter"
+    "keyup .reply-form, .repost-form": "updateCharCounter",
+		"click .main-user-info .avatar-large": "uploadNewImage"
   },
 
   template: JST["users/show"],
@@ -28,7 +31,6 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
   render: function () {
     var content = this.template({
       user: this.user,
-      currentUser: this.currentUser,
       posts: this.posts
     })
 
@@ -79,7 +81,7 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
     var that = this;
 
     var fav_options = {
-      user_id: this.currentUser.id,
+      user_id: Chattr.currentUser.id,
       favoriteable_type: "Post",
       favoriteable_id: post.id
     }
@@ -108,5 +110,16 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
     var $charCounter = $post.find('.char-counter')
     var charsLeft = 141 - $(event.target).val().length;
     $charCounter.text(charsLeft + " characters remaining")
-  }
+  },
+	
+	uploadNewImage: function () {
+		if (this.user.id === Chattr.currentUser.id) {
+			var that = this;
+		  filepicker.pick(function(blob) {
+				that.user.set({"avatar_url": blob.url})
+				that.user.save();
+		  });
+		}
+	}
+	
 });

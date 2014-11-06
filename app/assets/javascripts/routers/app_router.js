@@ -1,18 +1,16 @@
 Chattr.Routers.AppRouter = Backbone.Router.extend({
   initialize: function (options) {
-    var router = this;
-    this.currentUser = new Chattr.Models.CurrentUser();
+		
+		if (Chattr.currentUser) {
+			this.updateHeader(true);
+			var path = window.location.pathname;
+			this.navigate(path, { trigger: true })
+			
+		} else {
+			window.location.hash = "";
+			this.updateHeader(false);
+		}
 
-    this.currentUser.fetch({
-      success: function () {
-        router.updateHeader(true);
-        router.navigate("", { trigger: true })
-      },
-      error: function () {
-        router.updateHeader(false);
-        // router.navigate("/signin", { trigger: true })
-      }
-    })
     this.$rootEl = $('#body-bottom')
   },
 
@@ -25,29 +23,24 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
 
   updateHeader: function (is_signedIn) {
     if (is_signedIn) {
-      var siteHeaderView = new Chattr.Views.SiteHeader({ model: this.currentUser })
+      var siteHeaderView = new Chattr.Views.SiteHeader()
       $('header#site-header').html(siteHeaderView.render().$el)
     } else {
-      var siteHeaderView = new Chattr.Views.SiteHeader({ model: null })
+      var siteHeaderView = new Chattr.Views.SiteHeader()
       $('header#site-header').html(siteHeaderView.render().$el)
     }
 
   },
 
   postsIndex: function () {
-    var that = this;
     Chattr.Collections.posts.fetch();
+    this.updateHeader(true)
 
-    this.currentUser.fetch({
-      success: function () {
-        that.updateHeader(true)
-        var postsIndexView = new Chattr.Views.PostsIndex({
-          posts: Chattr.Collections.posts,
-          currentUser: that.currentUser
-        });
-        that._swapView(postsIndexView)
-      }
+    var postsIndexView = new Chattr.Views.PostsIndex({
+      posts: Chattr.Collections.posts,
+      currentUser: Chattr.currentUser
     });
+    this._swapView(postsIndexView)
   },
 
   userShow: function (id) {
@@ -55,16 +48,11 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
     var user = Chattr.Collections.users.getOrFetch(id);
     user.fetch();
 
-    this.currentUser.fetch({
-      success: function () {
-        var userShowView = new Chattr.Views.UserShow({
-          user: user,
-          currentUser: that.currentUser,
-          posts: user.posts()
-        })
-        that._swapView(userShowView);
-      }
-    });
+    var userShowView = new Chattr.Views.UserShow({
+      user: user,
+      posts: user.posts()
+    })
+    this._swapView(userShowView);
   },
 
 	signIn: function () {

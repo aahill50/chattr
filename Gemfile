@@ -13,6 +13,7 @@ gem 'sass'
 gem 'backbone-on-rails'
 gem 'ejs'
 gem 'faker'
+gem 'filepicker-rails'
 
 group :doc do
   gem 'sdoc', require: false

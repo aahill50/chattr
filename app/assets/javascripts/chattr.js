@@ -4,12 +4,26 @@ window.Chattr = {
   Views: {},
   Routers: {},
   initialize: function() {
-    new Chattr.Routers.AppRouter();
     Chattr.Collections.posts = new Chattr.Collections.Posts;
-		Chattr.Collections.users = new Chattr.Collections.Users;
 		Chattr.Collections.posts.fetch();
+		Chattr.Collections.users = new Chattr.Collections.Users;
+		
+		$.ajax({
+			url: '/api/users/current_user',
+			type: 'GET',
+			success: function (data) {
+				Chattr.currentUser = data
+			},
+			error: function () {
+				Chattr.currentUser = null;
+			},
+			complete: function () {
+		    new Chattr.Routers.AppRouter();
+		    Backbone.history.start();
+			}
+		});
+		
 
-    Backbone.history.start();
   }
 };
 

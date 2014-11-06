@@ -19,7 +19,6 @@ Chattr.Views.SessionNew = Backbone.View.extend({
 			data: params,
 			dataType: "text",
 			success: function (data) {
-				console.log("SUCCESS!", data)
 				Backbone.history.navigate("/posts", { trigger: true })
 			},
 			error: function () {

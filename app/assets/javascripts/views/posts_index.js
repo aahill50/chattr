@@ -3,7 +3,6 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     this.posts = options.posts;
     this.favs = new Chattr.Collections.Favorites;
     this.favs.fetch();
-    this.currentUser = options.currentUser;
     this.listenTo(this.posts, "add remove", this.render);
     this.listenTo(this.favs, "add remove sync", this.render);
   },
@@ -29,7 +28,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   render: function () {
     var content = this.template({
       posts: this.posts,
-      currentUser: this.currentUser
+      currentUser: Chattr.currentUser
     });
     this.$el.html(content);
     return this;
@@ -88,7 +87,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     var that = this;
 
     var fav_options = {
-      user_id: this.currentUser.id,
+      user_id: Chattr.currentUser.id,
       favoriteable_type: "Post",
       favoriteable_id: post.id
     }
