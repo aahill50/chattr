@@ -24,9 +24,9 @@ User.create(username:"aaron",
             bio:"I made this!",
             password:"password")
 
-USER_COUNT = 20
-POST_COUNT = 200
-FOLLOW_COUNT = 80
+USER_COUNT = 5
+POST_COUNT = 60
+FOLLOW_COUNT = 20
 
 (USER_COUNT - 1).times do
   fname = Faker::Name.name
