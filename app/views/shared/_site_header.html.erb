@@ -9,23 +9,31 @@
 			
 			var $dropdownParent = $('.dropdown-parent')
 			var $dropdown = $('<ul>')
-			var $signOutLi = $('<li>')
+			var $myProfileLi = $('<li>')
 			var $editUserLi = $('<li>')
+			var $signOutLi = $('<li>')
+			
 			var $oldSignOut = $('#sign-out')
+			var $myProfile = $('<a>')
 			var $editUser = $('<a>')
 			
 			$dropdown.addClass('user-menu')
 			$oldSignOut.addClass("in-dropdown")
+			$myProfile.prop("href", "/#users/" + <%= current_user.id %> )
 			$editUser.prop("href", "/users/" + <%= current_user.id %> + "/edit")
+			$myProfile.text("My Profile")
 			$editUser.text("Edit Profile")
 			$editUser.addClass("in-dropdown")
+			$myProfile.addClass("in-dropdown")
 			
 			$signOutLi.append($oldSignOut)
 			$editUserLi.append($editUser)
+			$myProfileLi.append($myProfile)
 			
 			$('#sign-out').remove()
 			$('#edit-user').remove()
 			
+			$dropdown.append($myProfileLi);
 			$dropdown.append($editUserLi);
 			$dropdown.append($signOutLi);
 			
