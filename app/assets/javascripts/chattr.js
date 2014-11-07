@@ -3,32 +3,20 @@ window.Chattr = {
   Collections: {},
   Views: {},
   Routers: {},
-  initialize: function() {
-		console.log("initializing...")
+  initialize: function(currentUserId) {
     Chattr.Collections.posts = new Chattr.Collections.Posts;
-		Chattr.Collections.posts.fetch();
 		Chattr.Collections.users = new Chattr.Collections.Users;
+		Chattr.currentUser = new Chattr.Models.User ({ id: currentUserId })
+		Chattr.searchHandler = new Chattr.Views.SearchHandler();
+		console.log("fetching....")
 		
-		Chattr.Collections.users.fetch({
-			success: function () {
-				$.ajax({
-					url: '/api/users/current_user',
-					type: 'GET',
-					success: function (data) {
-						Chattr.currentUser = Chattr.Collections.users.get(data.id)
-						Chattr.currentUser.fetch();
-					},
-					error: function () {
-						Chattr.currentUser = null;
-					},
-					complete: function () {
-						console.log("chattr backbone starting...")
-				    Chattr.appRouter = new Chattr.Routers.AppRouter();
-				    Backbone.history.start();
-					}
-				});
-			}
-		});
+		Chattr.Collections.posts.fetch();
+		Chattr.Collections.users.fetch();
+		Chattr.currentUser.fetch();
+		
+    
+		new Chattr.Routers.AppRouter();
+    Backbone.history.start();
   }
 };
 

@@ -8,7 +8,7 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
     this.posts = this.user.posts();
 		this.posts.fetch();
 		
-    this.listenTo(this.user, "change:avatar_url sync", this.render);
+    this.listenTo(this.user, "change:avatar_url change:banner_url sync", this.render);
     this.listenTo(this.posts, "add remove", this.render);
   },
 
@@ -21,6 +21,7 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
     "click .delete-post": "deletePost",
     "keyup .reply-form, .repost-form": "updateCharCounter",
 		"click .main-user-info .avatar-large": "uploadNewImage",
+		"click .profile-banner": "uploadNewBanner",
 		"click #user-follow": "toggleFollow"
   },
 
@@ -172,6 +173,16 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
 			var that = this;
 		  filepicker.pick(function(blob) {
 				that.user.set({"avatar_url": blob.url})
+				that.user.save();
+		  });
+		}
+	},
+	
+	uploadNewBanner: function () {
+		if (this.user.id === Chattr.currentUser.id) {
+			var that = this;
+		  filepicker.pick(function(blob) {
+				that.user.set({"banner_url": blob.url})
 				that.user.save();
 		  });
 		}

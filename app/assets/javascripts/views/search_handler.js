@@ -1,65 +1,40 @@
-Chattr.Views.SiteHeader = Backbone.View.extend ({
+Chattr.Views.SearchHandler = Backbone.View.extend ({
+	initialize: function () {
+		this.$el = $('#site-header')
+	},
+	
 	events: {
-		"click .sign-out": "signOut",
     "keyup #search": "search",
 		"blur #search": "closeSearch",
 		"click #search .users a": "closeSearch"
-	},
-
-  template: function(options) {
-    if (Chattr.currentUser) {
-      return JST["shared/site_header"]
-    } else {
-      return JST["shared/site_header_unsigned"]
-    }
-
-  },
-
-  tagName: 'header',
-
-  className: 'site-header group',
-
-  id: 'site-header',
-
-  render: function () {
-    var content = this.template({ currentUser: Chattr.currentUser });
-    this.$el.html(content);
-    return this;
-  },
-
-	signOut: function (event) {
-		event.preventDefault();
-
-		$.ajax({
-			type: 'DELETE',
-			url: 'api/session',
-			dataType: "text",
-			success: function () {
-				Backbone.history.navigate("/session/new", { trigger: true })
-			}
-		})
 	},
 
   search: function (event) {
     event.preventDefault();
     var params = $(event.currentTarget).serializeJSON()
 		var $searchResults = $('.search-results .users');
+		console.log($searchResults)
 		
     if (params['search']['string'].length >= 3) {
 			$searchResults.addClass("active")
+			
       $.ajax({
-        url: 'api/users/search',
+        url: 'api/search',
         data: params,
         type: 'POST',
         success: function (data) {
 					$searchResults.addClass("active");
 					$searchResults.empty();
-					
-          data.forEach( function (result) {
+
+          data.hashtags.forEach( function (result) {
+						var $newLi = $('<li>')
+						$newLi.html("<a href='#tags/" + result.id + "'>" + _.escape("#" + result.tag) + "</a>")
+          	$searchResults.append($newLi)
+          })
+										
+          data.users.forEach( function (result) {
 						var $newLi = $('<li>')
 						$newLi.html("<a href='#users/" + result.id + "'>" + _.escape(result._username) + "</a>")
-						// debugger
-						console.log($newLi.html())
           	$searchResults.append($newLi)
           })
         },
@@ -68,7 +43,7 @@ Chattr.Views.SiteHeader = Backbone.View.extend ({
         }
       })
     } else {
-			$searchResults.removeClass("append`ctive")
+			$searchResults.removeClass("active")
     	$searchResults.empty();
     }
   },

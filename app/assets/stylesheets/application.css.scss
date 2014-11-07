@@ -140,11 +140,13 @@ ul {
 
 .profile-banner {
   position: relative;
-  z-index: -100;
+/*  z-index: -100;*/
 	width: 100%;
 	height: 170px;
-	background: #FF9C00;
+	background: transparent;
 	border-bottom: 1px solid black;
+	overflow: hidden;
+	cursor: pointer;
 	
 	img {
 		width: 100%;
@@ -334,12 +336,14 @@ article.post {
 }
 
 .buttons-container form {
-  padding-top: 10px;
+  padding: 10px 15px 0 0;
   margin-bottom: 10px;
   display: inline-block;
 }
 
-
+.buttons-container button {
+	padding: 7px 10px;
+}
 
 .profile-nav-ribbon.stretch {
 	position: absolute;

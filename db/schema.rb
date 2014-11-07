@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20141106232759) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_url",      default: "https://www.filepicker.io/api/file/CbNGAq3fQjyWZIrQX311"
-    t.string   "banner_url",      default: "https://www.filepicker.io/api/file/x92QksnQB6Pj6oJz3l6E"
+    t.string   "banner_url",      default: "https://www.filepicker.io/api/file/1GpBbLckRvi1DWl5wabD"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree

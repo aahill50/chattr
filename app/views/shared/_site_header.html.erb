@@ -4,6 +4,8 @@
 	<script>
 		$(function () {
 			$('body').removeClass('unsigned')
+			$('#current-user').prop("href", "/#users/" + <%= current_user.id %>)
+			$('#home').prop("href", "/#")
 		})
 	</script>
       <li class="left"><a id="home" href="<%= root_url %>">Home</a></li>
@@ -33,6 +35,10 @@
           <%= render 'shared/auth_token' %>
           <input type="search" name="search[string]" placeholder="Search chattr">
         </form>
+				<div class="search-results">
+					<ul class="users">
+					</ul>
+				</div>
       </li>
 
   <% else %>

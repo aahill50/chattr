@@ -1,12 +1,5 @@
 Chattr.Routers.AppRouter = Backbone.Router.extend({
   initialize: function (options) {
-		console.log("backbone router initialized...")
-		if (Chattr.currentUser) {
-			this.updateHeader(true);
-		} else {
-			this.updateHeader(false);
-		}
-
     this.$rootEl = $('#body-bottom')
   },
 
@@ -18,22 +11,22 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
     // "posts/:id": "postShow"
   },
 
-  updateHeader: function (is_signedIn) {
-    if (is_signedIn) {
-      var siteHeaderView = new Chattr.Views.SiteHeader()
-			$('body').removeClass('unsigned')
-      $('header#site-header').html(siteHeaderView.render().$el)
-    } else {
-			$('body').addClass('unsigned')
-      var siteHeaderView = new Chattr.Views.SiteHeader()
-      $('header#site-header').html(siteHeaderView.render().$el)
-    }
-
-  },
+  // updateHeader: function (is_signedIn) {
+  //   if (is_signedIn) {
+  //     var siteHeaderView = new Chattr.Views.SiteHeader()
+  // 			$('body').removeClass('unsigned')
+  //     // $('header#site-header').html(siteHeaderView.render().$el)
+  //   } else {
+  // 			$('body').addClass('unsigned')
+  //     var siteHeaderView = new Chattr.Views.SiteHeader()
+  //     // $('header#site-header').html(siteHeaderView.render().$el)
+  //   }
+  //
+  // },
 
   postsIndex: function () {
     Chattr.Collections.posts.fetch();
-    this.updateHeader(true)
+    // this.updateHeader(true)
 
     var postsIndexView = new Chattr.Views.PostsIndex({
       posts: Chattr.Collections.posts
@@ -54,7 +47,7 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
 
 	signIn: function () {
 		Chattr.currentUser = null;
-    this.updateHeader(false)
+    // this.updateHeader(false)
 		var sessionNewView = new Chattr.Views.SessionNew();
     this._swapView(sessionNewView);
 	},
@@ -63,7 +56,7 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
 		console.log(newUser)
 		var newUser = new Chattr.Models.User
 		Chattr.currentUser = null;
-    this.updateHeader(false)
+    // this.updateHeader(false)
 		var userNewView = new Chattr.Views.UserNew({user: newUser});
     this._swapView(userNewView);
 	},

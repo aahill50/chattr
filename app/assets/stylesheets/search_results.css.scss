@@ -2,6 +2,8 @@ form#search {
 }
 
 #search input {
+	position: relative;
+	bottom: 10px;
 	border: 1px solid #ccc;
 	width: 200px;
 	border-radius: 10px;
@@ -14,6 +16,11 @@ form#search {
 #site-header .search_results {
 	height: 100px;
 	padding: 10px;
+	transition: height 2s;
+}
+
+#site-header .search_results .users {
+	transition: height 2s;
 }
 
 #site-header .search-results .users.active {
@@ -29,6 +36,7 @@ form#search {
 	color: #E8AB00;
 	text-decoration: none;
 	border-bottom: 0;
+	text-align: right;
 }
 
 #site-header li#search-container {

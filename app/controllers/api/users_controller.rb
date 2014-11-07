@@ -23,15 +23,9 @@ module Api
       render :current_user
     end
 
-    def search
-      search_str = params[:search][:string]
-      @found_users = User.search_for(search_str)
-      render :search_results
-    end
-    
     private
     def user_params
-      params.require(:user).permit(:bio, :avatar_url)
+      params.require(:user).permit(:bio, :avatar_url, :banner_url)
     end
   end
 end

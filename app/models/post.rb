@@ -20,6 +20,9 @@ class Post < ActiveRecord::Base
   
   has_many :favorites, as: :favoriteable
   
+  after_save :register_hashtags
+  
+  HASHTAG_REGEX = /(?:\s|^)(?:#(?!\d+(?:\s|$)))(\w+)(?=\s|$)/i
 
   def format_RP(content)
     new_content = "RP-" + self.author._username + " - " + content
@@ -29,20 +32,20 @@ class Post < ActiveRecord::Base
     new_content
   end
   
-  def parse_hashtags
-    self.content.scan(/(#[\w+\S]+)/).flatten
+  def find_hashtags
+    self.content.scan(HASHTAG_REGEX).flatten
   end
   
-  def hashtagged_words_indices
-    hashtagged_words = self.parse_hashtags
-    content_as_arr = self.content.split(' ')
-    indices = [];
+  def has_hashtags?
+    self.find_hashtags.length > 0
+  end
     
-    p content_as_arr
-    hashtagged_words.each do |tag_word|
-    p tag_word
-      indices += content_as_arr.each_index.select { |i| content_as_arr[i] == tag_word }
+  def register_hashtags
+    if has_hashtags?
+      self.find_hashtags.each do |hashtag|
+        hash = Hashtag.find_by(tag: hashtag) || Hashtag.create(tag: hashtag)
+        self.tags.create(tag_id: hash.id, user_id: self.author.id)
+      end
     end
-    indices
   end
 end
