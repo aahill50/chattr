@@ -35,12 +35,29 @@
 	</div>
 
   <% if form_type == "edit_user" %>
+	<script>
+		$editForm = $('.user-form')
+		$editForm.on("submit", function (event) {
+			event.preventDefault();
+			var params = $editForm.serializeJSON(); 
+			var user = new Chattr.Models.User(params);
+			
+			$.ajax({
+				url: "/api/users/" + <%= current_user.id %>,
+				type: "PATCH",
+				data: params,
+				success: function () {
+					Chattr.initialize(<%= current_user.id %>);
+				}
+			})
+		})
+	</script>
+	
 	<label for="username">Bio</label>
 	<div class="form-group group">
 		<textarea id="bio"
 					 name="user[bio]"
-					 placeholder="Enter a short biography"
-					 value="<%= @user.bio %>"></textarea>
+					 placeholder="Enter a short biography"><%= @user.bio %></textarea>
 	</div>
   <% end %>
 

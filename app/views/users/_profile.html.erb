@@ -1,10 +1,14 @@
 <section class="user-profile">
 	<section class="top">
-	  <div class="avatar"></div>
+	  <div class="avatar">
+	  	<img src="<%= user.avatar_url %>">
+	  </div>
 	</section>
 
-	<div class="fullname"><a href="<%= user_url(user) %>"><%= user.fullname %></a></div>
-	<div class="username"><%= user._username %></div>
+	<div class="names">
+		<div class="fullname"><a href="<%= user_url(user) %>"><%= user.fullname %></a></div>
+		<div class="username"><%= user._username %></div>
+	</div>
 	<div class="join-date">Joined <%= user.join_date %></div>
 
 	<section class="bottom bio">

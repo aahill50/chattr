@@ -16,6 +16,7 @@ Chattr::Application.routes.draw do
     resources :user_follows, only: [:create, :destroy]
     resources :favorites, only: [:index, :show, :create, :destroy]
     resources :hashtags, only: [:index, :show]
+    resources :post_tags, only: [:index, :show]
     resource :session, only: [:new, :create, :destroy]
   end
 

@@ -6,14 +6,56 @@
 			$('body').removeClass('unsigned')
 			$('#current-user').prop("href", "/#users/" + <%= current_user.id %>)
 			$('#home').prop("href", "/#")
+			
+			var $dropdownParent = $('.dropdown-parent')
+			var $dropdown = $('<ul>')
+			var $signOutLi = $('<li>')
+			var $editUserLi = $('<li>')
+			var $oldSignOut = $('#sign-out')
+			var $editUser = $('<a>')
+			
+			$dropdown.addClass('user-menu')
+			$oldSignOut.addClass("in-dropdown")
+			$editUser.prop("href", "/users/" + <%= current_user.id %> + "/edit")
+			$editUser.text("Edit Profile")
+			$editUser.addClass("in-dropdown")
+			
+			$signOutLi.append($oldSignOut)
+			$editUserLi.append($editUser)
+			
+			$('#sign-out').remove()
+			$('#edit-user').remove()
+			
+			$dropdown.append($editUserLi);
+			$dropdown.append($signOutLi);
+			
+			$dropdownParent.append($dropdown)
+			
+			$dropdownParent.on("click", function (event) {
+				if ( $(event.target).parents('.user-menu').length > 0 ) {
+					return;
+				}
+				
+				event.preventDefault();	
+				$dropdown.addClass("active transitioning")
+				
+				window.setTimeout( function () {
+					$dropdown.removeClass("transitioning")
+				}, 0)
+			})
+			
+			$(window).on("mouseup", function (event) {
+				if ( $(event.target).parents('.user-menu').length > 0) {
+					return;
+				}
+				
+				$dropdown.removeClass("active")
+			})
 		})
 	</script>
       <li class="left"><a id="home" href="<%= root_url %>">Home</a></li>
-      <li class="left"><a id="notifications" href="#">Notifications</a></li>
-      <li class="left"><a id="messages" href="#">Messages</a></li>
-
-
-
+      <!-- <li class="left"><a id="notifications" href="#">Notifications</a></li> -->
+      <li class="left"><a id="messages" href="/#hashtags">#Discover</a></li>
       <li class="right"><a id="new-post" href="<%= new_post_url %>">New Post</a></li>
 
       <li class="right">
@@ -24,9 +66,9 @@
         </form>
       </li>
 
-      <li class="right">
-        <a id="current-user" href="<%= user_url(current_user) %>">
-        <%= current_user._username %>
+      <li class="right dropdown-parent">
+        <a id="current-user" class="avatar" href="<%= user_url(current_user) %>">
+        	<img id="user-dropdown" src="<%= current_user.avatar_url %>">
         </a>
       </li>
 

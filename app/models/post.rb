@@ -16,14 +16,14 @@ class Post < ActiveRecord::Base
     foreign_key: :parent_post_id,
     inverse_of: :parent_post
 
-  has_many :tags, class_name: "PostTag"
+  has_many :tags, class_name: "PostTag", dependent: :destroy
   
   has_many :favorites, as: :favoriteable
   
   after_save :register_hashtags
   
-  HASHTAG_REGEX = /(?:\s|^)(?:#(?!\d+(?:\s|$)))(\w+)(?=\s|$)/i
-
+  HASHTAG_REGEX = /(?:\s|^)(?:#(?!\d+(?:\s|$)))(\w+)(?=\s|\?|\.|\!|$)/i
+  
   def format_RP(content)
     new_content = "RP-" + self.author._username + " - " + content
     if new_content.length > 141
@@ -33,7 +33,7 @@ class Post < ActiveRecord::Base
   end
   
   def find_hashtags
-    self.content.scan(HASHTAG_REGEX).flatten
+    self.content.scan(HASHTAG_REGEX).flatten.uniq
   end
   
   def has_hashtags?

@@ -11,11 +11,15 @@ module Api
     end
     
     def update
-      @user = User.find(params[:id])
-      if @user.update(user_params)
-        head :ok
+      password = params[:user][:password]
+      password_conf = params[:user][:password_confirmation]
+      
+      if current_user.is_password?(password) && current_user.is_password?(password_conf)
+        if current_user.update(user_params)
+          render json: current_user
+        end
       else
-        render text: "Update failed", status: :unprocessable_entity
+        render text: "Unable to update with those credentials", status: :unprocessable_entity
       end
     end
 

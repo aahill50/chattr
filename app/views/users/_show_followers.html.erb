@@ -1,10 +1,12 @@
-<section class="post-container">
+<section class="posts-container">
   <section class="post-content active">
     <header class="title"><h2>Followers</h2></header>
-    <% user.followers.each do |follower| %>
-      <div class="user-profiles">
-        <%= render 'users/profile', user: follower %>
-      </div>
-    <% end %>
+		<article class="post group">
+	    <% user.followers.each do |follower| %>
+	      <div class="user-profiles">
+	        <%= render 'users/profile', user: follower %>
+	      </div>
+	    <% end %>
+		</article>
   </section>
 </section>

@@ -1,4 +1,12 @@
-<%= render 'posts/post', post: @post %>
-<% @post.children_posts.each do |child| %>
-  <%= render 'posts/post', post: child %>
-<% end %>
+<section class="index-profile">
+  <%= render 'users/index_profile' %>
+  <%= render 'posts/post_form', parent_post_id: nil %>
+</section>
+
+<section class="posts-container">
+	  <header class="title"><h2>Posts </h2></header>
+	<%= render 'posts/post', post: @post %>
+	<% @post.children_posts.each do |child| %>
+	  <%= render 'posts/post', post: child %>
+	<% end %>
+</section>

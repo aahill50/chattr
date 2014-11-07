@@ -1,12 +1,12 @@
 module Api
   class HashtagsController < ApiController
     def index
-      @hashtags = Hashtag.all.includes(:posts)
+      @hashtags = Hashtag.all.includes(:tagged_posts)
       render :index
     end
 
     def show
-      @favorite = Favorite.find(params[:id])
+      @hashtag = Hashtag.includes(:tagged_posts).find(params[:id])
       render :show
     end
 

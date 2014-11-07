@@ -28,7 +28,7 @@ Chattr.Views.SearchHandler = Backbone.View.extend ({
 
           data.hashtags.forEach( function (result) {
 						var $newLi = $('<li>')
-						$newLi.html("<a href='#tags/" + result.id + "'>" + _.escape("#" + result.tag) + "</a>")
+						$newLi.html("<a href='#hashtags/" + result.id + "'>" + _.escape("#" + result.tag) + "</a>")
           	$searchResults.append($newLi)
           })
 										

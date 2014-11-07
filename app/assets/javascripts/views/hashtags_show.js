@@ -1,11 +1,9 @@
-Chattr.Views.PostShow = Backbone.View.extend({
+Chattr.Views.HashtagShow = Backbone.View.extend({
 	initialize: function (options) {
-		this.post = options.post;
-		this.childrenPosts = this.post.childrenPosts();
- 		var that = this;
-		
-		this.listenTo(this.post, "add", this.render);
-		this.listenTo(this.childrenPosts, "add remove", this.render);
+		this.tag = options.tag;
+		postTags = this.tag.taggedPosts()
+
+		// this.listenTo(this.posts, "add", this.render);
 	},
 	
   events: {
@@ -20,12 +18,12 @@ Chattr.Views.PostShow = Backbone.View.extend({
     "click .delete-post": "deletePost"
   },
 
-  template: JST["posts/show"],
+  template: JST["hashtags/show"],
 
   render: function () {
     var content = this.template({
-			post: this.post,
-		  childrenPosts: this.childrenPosts
+			tag: this.tag,
+			posts: this.posts
 		})
     this.$el.html(content)
     return this;

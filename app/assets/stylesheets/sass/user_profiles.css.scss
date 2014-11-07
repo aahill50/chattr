@@ -1,0 +1,15 @@
+.user-profile {
+	border: 1px solid black;
+	font-size: 14px;
+	
+	.names {
+		border-bottom: 1px solid black;
+	}
+	
+	.join-date {
+		color: #888;
+		font-size: 12px;
+		font-style: italic;
+		padding-bottom: 5px;
+	}
+}

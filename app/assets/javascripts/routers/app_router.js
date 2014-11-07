@@ -7,32 +7,55 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
     "": "postsIndex",
 		"users/new": "signUp",
     "users/:id": "userShow",
-		"session/new": "signIn"
-    // "posts/:id": "postShow"
+		"session/new": "signIn",
+    "posts/:id": "postShow",
+		"hashtags": "tagsIndex",
+		"hashtags/:id": "tagShow"
   },
-
-  // updateHeader: function (is_signedIn) {
-  //   if (is_signedIn) {
-  //     var siteHeaderView = new Chattr.Views.SiteHeader()
-  // 			$('body').removeClass('unsigned')
-  //     // $('header#site-header').html(siteHeaderView.render().$el)
-  //   } else {
-  // 			$('body').addClass('unsigned')
-  //     var siteHeaderView = new Chattr.Views.SiteHeader()
-  //     // $('header#site-header').html(siteHeaderView.render().$el)
-  //   }
-  //
-  // },
 
   postsIndex: function () {
     Chattr.Collections.posts.fetch();
-    // this.updateHeader(true)
 
     var postsIndexView = new Chattr.Views.PostsIndex({
       posts: Chattr.Collections.posts
     });
     this._swapView(postsIndexView)
   },
+	
+	tagsIndex: function () {
+		var tagsIndexView = new Chattr.Views.HashtagsIndex({
+			tags: Chattr.Collections.hashtags
+		});
+		this._swapView(tagsIndexView);
+	},
+	
+	postShow: function (id) {
+		var that = this;
+		var post = Chattr.Collections.posts.getOrFetch(id);
+		
+		post.fetch({
+			success: function () {
+				var postShowView = new Chattr.Views.PostShow({
+					post: post
+				});
+				that._swapView(postShowView);
+			}
+		});
+	},
+
+	tagShow: function (id) {
+		var that = this;
+		var tag = Chattr.Collections.hashtags.getOrFetch(id);
+		
+		tag.fetch({
+			success: function () {
+				var tagShowView = new Chattr.Views.HashtagShow({
+					tag: tag
+				});
+				that._swapView(tagShowView);
+			}
+		});
+	},
 
   userShow: function (id) {
     var that = this;
@@ -47,7 +70,6 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
 
 	signIn: function () {
 		Chattr.currentUser = null;
-    // this.updateHeader(false)
 		var sessionNewView = new Chattr.Views.SessionNew();
     this._swapView(sessionNewView);
 	},
@@ -56,7 +78,6 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
 		console.log(newUser)
 		var newUser = new Chattr.Models.User
 		Chattr.currentUser = null;
-    // this.updateHeader(false)
 		var userNewView = new Chattr.Views.UserNew({user: newUser});
     this._swapView(userNewView);
 	},

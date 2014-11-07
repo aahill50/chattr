@@ -6,17 +6,19 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
-  has_many :posts, order: "created_at DESC", inverse_of: :author
+  has_many :posts, order: "created_at DESC", inverse_of: :author, dependent: :destroy
 
   has_many :follows_from_others,
       class_name: "UserFollow",
       foreign_key: :user_id,
-      inverse_of: :followed_user
+      inverse_of: :followed_user,
+      dependent: :destroy
 
   has_many :follows_to_others,
     class_name: "UserFollow",
     foreign_key: :follower_id,
-    inverse_of: :follower
+    inverse_of: :follower,
+    dependent: :destroy
 
   has_many :favorites
 
