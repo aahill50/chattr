@@ -1,12 +1,12 @@
 module Api
   class PostsController < ApiController
     def index
-      @posts = current_user.main_feed_posts
+      @posts = current_user.main_feed_posts.includes(:favorites)
       render :index
     end
 
     def show
-      @post = Post.includes(:author).find(params[:id])
+      @post = Post.includes(:author, :favorites).find(params[:id])
       render :show
     end
 

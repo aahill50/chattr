@@ -1,22 +1,48 @@
 <section class="index-profile">
   <section class="top">
-    <div class="avatar"></div>
+		<figure class="mini-banner">
+			<img src="<%= Chattr.currentUser.get("banner_url") %>">
+		</figure>
+    <figure class="avatar">
+    	<img src="<%= Chattr.currentUser.get("avatar_url") %>">
+    </figure>
   </section>
-  <section class="names">
-    <div class="fullname"><%= currentUser.fullname %></div>
-    <div class="username"><%= currentUser._username %></div>
-  </section>
+	
+  <a href="#">
+		<section class="names">
+	    <div class="fullname"><%= Chattr.currentUser.get("fullname") %></div>
+	    <div class="username"><%= Chattr.currentUser._username() %></div>
+	  </section>
+	</a>
 
   <section class="bottom titles">
-    <div class="count-title">POSTS</div>
-    <div class="count-title">FOLLOWING</div>
-    <div class="count-title">FOLLOWERS</div>
+    <div class="count-title">
+			POSTS
+		</div>
+    <div class="count-title">
+			FOLLOWING
+		</div>
+    <div class="count-title">
+			FOLLOWERS
+		</div>
   </section>
 
   <section class="bottom counts">
-    <div class="post count"><%= currentUser.post_count %></div>
-    <div class="following count"><%= currentUser.following_count %></div>
-    <div class="follower count"><%= currentUser.follower_count %></div>
+    <div class="post count">
+			<a href="/#users/<%= Chattr.currentUser.id %>/posts">
+				<%= Chattr.currentUser.get("post_count") %>
+			</a>
+		</div>
+    <div class="following count">
+			<a href="/#users/<%= Chattr.currentUser.id %>/following">
+				<%= Chattr.currentUser.get("following_count") %>
+			</a>
+		</div>
+    <div class="follower count">
+			<a href="/#users/<%= Chattr.currentUser.id %>/followers">
+				<%= Chattr.currentUser.get("follower_count") %>
+			</a>
+		</div>
   </section>
 
   <form class="new-post closed" action="#">
@@ -33,8 +59,11 @@
 
   <% posts.each( function(post) { %>
   <article class="post group"data-id="<%= post.id %>">
-    <figure class="avatar">
-    </figure>
+		<a href="#users/<%= post.author().id %>">
+	    <figure class="avatar">
+				<img src="<%= post.author().get("avatar_url") %>">
+	    </figure>
+		</a>
 
     <section class="post-container">
       <section class="post-info">
@@ -43,7 +72,7 @@
         <div class="timestamp"><%= post.get("timestamp") %></div>
       </section>
 
-      <% if (post.author().id === currentUser.id ) { %>
+      <% if (post.author().id === Chattr.currentUser.id ) { %>
         <span class="delete-post">&times;</span>
       <% } %>
 

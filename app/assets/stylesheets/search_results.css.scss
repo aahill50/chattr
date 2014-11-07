@@ -1,0 +1,36 @@
+form#search {
+}
+
+#search input {
+	border: 1px solid #ccc;
+	width: 200px;
+	border-radius: 10px;
+	font-size: 16px;
+	outline: 0;
+	padding: 2px;
+	text-align: right;
+}
+
+#site-header .search_results {
+	height: 100px;
+	padding: 10px;
+}
+
+#site-header .search-results .users.active {
+	background: #154862;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+#site-header .search-results a {
+	display: inline-block;
+	font-weight: normal;
+	font-size: 16px;
+	color: #E8AB00;
+	text-decoration: none;
+	border-bottom: 0;
+}
+
+#site-header li#search-container {
+	background: transparent;
+}

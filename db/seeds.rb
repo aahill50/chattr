@@ -37,7 +37,8 @@ FOLLOW_COUNT = 80
               username: uname,
               email: eml,
               bio: Faker::Company.catch_phrase,
-              password:"password")
+              password:"password",
+              avatar_url: Faker::Avatar.image)
 end
 
 POST_COUNT.times do

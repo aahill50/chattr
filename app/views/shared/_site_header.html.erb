@@ -1,6 +1,11 @@
 <header id="site-header" class="site-header group">
-  <% if signed_in? %>
     <ul class="site-header-nav">
+  <% if signed_in? %>
+	<script>
+		$(function () {
+			$('body').removeClass('unsigned')
+		})
+	</script>
       <li class="left"><a id="home" href="<%= root_url %>">Home</a></li>
       <li class="left"><a id="notifications" href="#">Notifications</a></li>
       <li class="left"><a id="messages" href="#">Messages</a></li>
@@ -23,18 +28,24 @@
         </a>
       </li>
 
-      <li class="right">
+      <li class="right" id="search-container">
         <form id="search" action="<%= user_search_url %>" class="search-chattr" method="POST">
           <%= render 'shared/auth_token' %>
           <input type="search" name="search[string]" placeholder="Search chattr">
         </form>
       </li>
 
-      <li class="middle" id="site-header-logo"><h1>chattr</h1></li>
-
-    </ul>
   <% else %>
-    <a id="sign-in" href="<%= new_session_url %>" class="right">Sign In</a>
-    <a id="sign-up" href="<%= new_user_url %>" class="right">Sign Up</a>
-<% end %>
+	<script>
+		$(function () {
+			$('body').addClass('unsigned')
+		})
+	</script>
+	    <li class="right"><a id="sign-in" href="<%= new_session_url %>" class="right">Sign In</a></li>
+	    <li class="right"><a id="sign-up" href="<%= new_user_url %>" class="right">Sign Up</a></li>
+	<% end %>
+	  <li class="middle" id="site-header-logo">
+			<%= image_tag("logos/chattr-logo.png") %>
+		</li>
+	</ul>
 </header>

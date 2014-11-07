@@ -1,5 +1,6 @@
 <section class="profile-banner">
 	<figure class="banner">
+		<img src="<%= user.get("banner_url") %>">
 	</figure>
 </section>
 
@@ -44,29 +45,33 @@
 	  <div class="join-date">Joined <%= user.get("join_date") %></div>
 	  <div class="bio"><%= user.get("bio") %></div>
 	  <% if (Chattr.currentUser.id !== user.id) { %>
-	    USER FOLLOW FORM
+			<button id="user-follow">
+	    <% if (user.get("is_followed_by_current_user")) { %>
+				Unfollow this User
+			<% } else { %>
+				Follow this User
+			<% } %>
+			</button>
 	  <% } %>
 	</section>
 </main>
 
 <section class="posts-container">
-	<header class="title"><h2>Posts BACKBONE</h2></header>
+  <header class="title"><h2>Posts BACKBONE</h2></header>
 
   <% posts.each( function(post) { %>
   <article class="post group"data-id="<%= post.id %>">
     <figure class="avatar">
+			<img src="<%= user.get("avatar_url") %>">
     </figure>
-
     <section class="post-container">
       <section class="post-info">
-        <div class="fullname"><%= post.author().get("fullname") %></div>
-        <div class="username"><%= post.author()._username() %></div>
+        <div class="fullname"><%= user.get("fullname") %></div>
+        <div class="username"><%= user._username() %></div>
         <div class="timestamp"><%= post.get("timestamp") %></div>
       </section>
 
-      <% if (post.author().id === Chattr.currentUser.id ) { %>
-        <span class="delete-post">&times;</span>
-      <% } %>
+      <span class="delete-post">&times;</span>
 
       <section class="post-content">
         <div class="text"><%= post.get("content") %></div>

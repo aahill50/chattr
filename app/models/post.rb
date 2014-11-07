@@ -16,7 +16,10 @@ class Post < ActiveRecord::Base
     foreign_key: :parent_post_id,
     inverse_of: :parent_post
 
+  has_many :tags, class_name: "PostTag"
+  
   has_many :favorites, as: :favoriteable
+  
 
   def format_RP(content)
     new_content = "RP-" + self.author._username + " - " + content
@@ -24,5 +27,22 @@ class Post < ActiveRecord::Base
       new_content = new_content[0..138] + "..."
     end
     new_content
+  end
+  
+  def parse_hashtags
+    self.content.scan(/(#[\w+\S]+)/).flatten
+  end
+  
+  def hashtagged_words_indices
+    hashtagged_words = self.parse_hashtags
+    content_as_arr = self.content.split(' ')
+    indices = [];
+    
+    p content_as_arr
+    hashtagged_words.each do |tag_word|
+    p tag_word
+      indices += content_as_arr.each_index.select { |i| content_as_arr[i] == tag_word }
+    end
+    indices
   end
 end

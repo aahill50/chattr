@@ -18,21 +18,23 @@ body, html, header, ul, li, a, div, section, article, form, h1, h2, figure, butt
   border: 0;
   font: inherit;
   background: inherit;
+	text-decoration: inherit;
 }
 
 button {
   font-size: 12px;
-  background: #78BCF8;
+  background: #E8AB00;
   padding: 5px 5px;
   border-radius: 5px;
-  color: #222;
-  font-weight: bold;
+  color: #154862;
+	font-style: italic;
   cursor: pointer;
   outline: 0;
 }
 
 input[type='text'],
 input[type='password'],
+input[type='search'],
 textarea {
   -webkit-appearance: none;
   padding: 0;
@@ -48,78 +50,28 @@ body {
   font-family: sans-serif;
   padding-top: 46px;
   margin: 0 auto;
-  background: #78BCF8;
+  background: #567BA8;
+
+}
+
+body.unsigned {
+	background-image: image-url("landing-bg.jpg");
+	background-size: 100%;
+	background-color: black;
+	background-repeat: no-repeat;
 }
 
 #body-top {
   position: fixed;
   top: 0;
   height: 45px;
-  border-bottom: 2px solid #6298C8;
+  border-bottom: 2px solid #154862;
   width: 100%;
   background: #fff;
 }
 
 ul {
   list-style: none;
-}
-
-#site-header {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  float: left;
-  width: 1200px;
-  min-width: 1000px;
-  height: 45px;
-}
-
-.site-header h1 {
-/*  position: relative;*/
-  top: 10px;
-  left: 600px;
-  width: 100px;
-  font-size: 20px;
-  margin: 0 auto;
-  text-align: center;
-  color: #469AE9;
-  background:transparent;
-}
-
-.site-header-nav {
-  position: fixed;
-  left: 50%;
-  margin-left: -600px;
-  width: 1200px;
-  height: 45px;
-  z-index: 1000;
-}
-
-.site-header li {
-  padding: 18px 20px 0 20px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.site-header a {
-  text-decoration: none;
-  padding-bottom: 4px;
-  color: #777;
-}
-
-.site-header a:hover {
-  color: teal;
-  border-bottom: 3px solid teal;
-}
-
-.site-header-nav li.left {
-  display: inline-block;
-  float: left;
-}
-
-.site-header-nav li.right {
-  display: inline-block;
-  float: right;
 }
 
 #all-content {
@@ -135,141 +87,7 @@ ul {
   z-index: -20;
 }
 
-.index-profile {
-  position: absolute;
-  width: 290px;
-  height: 290px;
-  margin: 0 5px;
-  left: 0;
-  background: white;
-  border-radius: 5px;
-  z-index: -5;
-}
 
-.index-profile .top {
-  height: 95px;
-  background: #229AC1;
-  border-radius: 5px 5px 0 0;
-}
-
-.index-profile .avatar {
-  position: absolute;
-  top: 70px;
-  left: 10px;
-  width: 68px;
-  height: 68px;
-  border: 4px solid white;
-  border-radius: 5px;
-}
-
-.index-profile .names {
-  position: relative;
-  left: 94px;
-  width: 180px;
-  padding-top: 10px;
-}
-
-.index-profile .fullname {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.index-profile .username {
-  font-size: 14px;
-}
-
-.index-profile .bottom {
-  border-radius: 0 0 5px 5px;
-  padding: 10px;
-  overflow: hidden;
-  float: left;
-  text-align: center;
-}
-
-.index-profile .titles {
-  width: 260px;
-  padding-top: 16px;
-}
-
-.index-profile .counts {
-  padding-top: 0;
-  width: 260px;
-  font-size: 20px;
-}
-
-.index-profile .titles div {
-  float: left;
-  width: 86px;
-  color: #798A98;
-  font-size: 11px;
-}
-
-.index-profile .counts div {
-  float: left;
-  width: 86px;
-  color: #229AC1;
-  font-weight: bold;
-}
-
-.index-profile form {
-  position: absolute;
-  float: left;
-  width: 270px;
-  height: 120px;
-  top: 230px;
-  background: #E3F3F8;
-  border-radius: 0 0 5px 5px;
-  padding: 10px;
-  padding-bottom: 25px;
-  border-top: 1px solid #BDE5EE;
-  transition: height .2s;
-}
-
-.index-profile form.closed {
-  position: absolute;
-  float: left;
-  width: 270px;
-  height: 40px;
-  top: 230px;
-  background: #E3F3F8;
-  border-radius: 0 0 5px 5px;
-  padding: 10px;
-  border-top: 1px solid #BDE5EE;
-}
-
-.index-profile form.closed button {
-  display: block;
-}
-
-.index-profile form.closed button {
-  display: none;
-}
-
-.index-profile form button {
-  position: absolute;
-  right: 10px;
-  bottom: 25px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.index-profile form textarea {
-  display: inline-block;
-  border: 1px solid #BDE5EE;
-  border-radius: 5px;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-}
-
-.index-profile .char-counter {
-  position: absolute;
-  top: 365px;
-  left: 10px;
-  background: orange;
-}
 
 .posts-container {
   margin: 10px auto;
@@ -293,6 +111,7 @@ ul {
 }
 
 .repost-form textarea, .reply-form textarea {
+	border-radius: 5px;
   width: 100%;
   height: 100px;
   font-size: 16px;
@@ -305,8 +124,8 @@ ul {
   display: inline-block;
   float: right;
   right: 20px;
-  bottom: 9px;
-  border-bottom-right-radius: 0;
+  bottom: 33px;
+  border-bottom-right-radius: 3px;
   border-top-right-radius: 0;
   border-bottom-left-radius: 0;
   outline: 0;
@@ -322,22 +141,33 @@ ul {
 .profile-banner {
   position: relative;
   z-index: -100;
+	width: 100%;
+	height: 170px;
+	background: #FF9C00;
+	border-bottom: 1px solid black;
+	
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+		overflow: hidden;
+	}
 }
 
 .main-user-info {
-  position: relative;
+	padding-top: 10px;
+  position: absolute;
   width: 290px;
   margin: 0 5px;
   float: left;
-  background: transparent;
   border-radius: 5px;
   z-index: -1;
 }
 
 .main-user-info figure {
+	border: 1px solid #154862;
 	width: 200px;
 	height: auto;
-	margin: 10px;
 	border: 5px solid #EEE;
 	border-radius: 5px;
 	background: #eee	;
@@ -348,11 +178,49 @@ ul {
 }
 
 .main-user-info img {
-	height: 200px;
+	width: 200px;
+	height: auto;
 	margin: 0 auto;
+	max-height: 200px;
+	max-width: 200px;
 	display: block;
 }
 
+.main-user-info div {
+	padding-left: 20px;
+	font-size: 16px;
+	margin: 10px 0;
+	max-width: 180px;
+	color: white;
+}
+
+.main-user-info .fullname {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.main-user-info .join-date {
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.main-user-info .bio {
+	font-weight: normal;
+	font-style: italic;
+	font-size: 14px;
+}
+
+.main-user-info #user-follow {
+	position: relative;
+	left: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 10px;
+}
+
+.posts-container {
+	border: 1px solid #154862;
+}
 .posts-container h2 {
   position: relative;
   font-size: 20px;
@@ -368,15 +236,24 @@ ul {
 article.post {
   border-bottom: 1px solid #ccc;
   padding: 10px;
+	padding-bottom: 35px;
 	background: white;
 }
 
 .post .avatar {
   height: 50px;
   width: 50px;
-  background: yellow;
   float: left;
   margin-right: 10px;
+}
+
+.avatar img {
+	width: 50px;
+	height: auto;
+	max-height: 50px;
+	max-width: 50px;
+	display: block;
+	border-radius: 5px;
 }
 
 .post {
@@ -410,28 +287,34 @@ article.post {
 }
 
 .post .post-info {
+	position: relative;
   width: 100%;
   height: 20px;
   margin-bottom: 5px;
 }
 
 .post-info .fullname {
+	position: relative;
   font-weight: bold;
   float: left;
   color: black;
-  padding-right: 5px;
   height: 100%;
 }
 
-.post-info .username{
+.post-info .username {
+	position: relative;
   font-size: 14px;
+	top: 1px; 
   float: left;
   color: #758695;
-  padding-right: 5px;
+  padding-left: 8px;
   height: 100%;
-}
-
-.post-info .timestamp{
+}          
+           
+.post-info .timestamp {
+	position: relative;
+	padding-left: 8px;
+	top: 3px;
   font-size: 12px;
   float: left;
   color: #758695;
@@ -456,10 +339,7 @@ article.post {
   display: inline-block;
 }
 
-.profile-banner {
-	height: 170px;
-	background: #229AC1;
-}
+
 
 .profile-nav-ribbon.stretch {
 	position: absolute;
@@ -514,6 +394,78 @@ article.post {
 
 .user-profile div {
 	background: transparent;
+}
+
+.form-group {
+	background: transparent;
+}
+
+.site-description {
+	position: absolute;
+	top: 100px;
+	margin: 0 auto;
+	background: rgba(0,0,0,0.35);
+	color: white;
+	padding: 30px;
+	font-size: 24px;
+	border-radius: 5px;
+	width: 260px;
+	left: 245px;
+	text-align: right;
+}
+
+.user-form {
+	position: relative;
+	top: 100px;
+	background: rgba(255, 255, 255, 0.65);
+	border-radius: 5px;
+	margin: 0 auto;
+	padding: 10px;
+	width: 350px;
+	left: 165px;
+}
+
+.user-form label, .user-form input, .user-form textarea {
+	background: transparent;
+	float: left;
+	padding: 5px 10px;
+	width: 100px;
+	margin-bottom: 10px;
+}
+
+.user-form input, .user-form textarea {
+	width: 200px;
+	float: right;
+	background: white;
+	border: 2px solid #154862;
+	border-radius: 5px;
+	outline: 0;
+}
+
+.user-form textarea {
+	height: 80px;
+}
+
+.user-form input:focus, textarea:focus {
+	outline: 0;
+	border: 2px solid #E18A00;
+	box-shadow: 0 0 2px 2px #E1A867;
+}
+
+.user-form button {
+	float: right;
+	border-bottom: 1px solid #154862;
+}
+
+.user-form button:hover {
+	position: relative;
+	background: #EC9103;
+}
+
+.user-form button:active {
+	top: 1px;
+	border-bottom: 0;
+	background: #D48306;
 }
 
 .group:after {

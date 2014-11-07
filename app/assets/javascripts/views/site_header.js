@@ -1,7 +1,9 @@
 Chattr.Views.SiteHeader = Backbone.View.extend ({
 	events: {
 		"click .sign-out": "signOut",
-    "keyup #search": "search"
+    "keyup #search": "search",
+		"blur #search": "closeSearch",
+		"click #search .users a": "closeSearch"
 	},
 
   template: function(options) {
@@ -41,21 +43,42 @@ Chattr.Views.SiteHeader = Backbone.View.extend ({
   search: function (event) {
     event.preventDefault();
     var params = $(event.currentTarget).serializeJSON()
-
+		var $searchResults = $('.search-results .users');
+		
     if (params['search']['string'].length >= 3) {
+			$searchResults.addClass("active")
       $.ajax({
         url: 'api/users/search',
         data: params,
         type: 'POST',
         success: function (data) {
-          console.log(data)
+					$searchResults.addClass("active");
+					$searchResults.empty();
+					
+          data.forEach( function (result) {
+						var $newLi = $('<li>')
+						$newLi.html("<a href='#users/" + result.id + "'>" + _.escape(result._username) + "</a>")
+						// debugger
+						console.log($newLi.html())
+          	$searchResults.append($newLi)
+          })
         },
         error: function () {
           console.log("error searching... ")
         }
       })
+    } else {
+			$searchResults.removeClass("append`ctive")
+    	$searchResults.empty();
     }
+  },
 
-  }
-
+	closeSearch: function () {
+		setTimeout(function(){
+			var $searchResults = $('.search-results .users');
+			$searchResults.removeClass("active")
+			$searchResults.empty();
+			$('#search input').text("")
+		}, 200);
+	}
 })

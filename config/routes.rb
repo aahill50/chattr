@@ -13,6 +13,7 @@ Chattr::Application.routes.draw do
     post 'users/search', to: 'users#search', as: 'user_search'
     resources :users
     resources :posts
+    resources :user_follows, only: [:create, :destroy]
     resources :favorites, only: [:index, :show, :create, :destroy]
     resource :session, only: [:new, :create, :destroy]
   end

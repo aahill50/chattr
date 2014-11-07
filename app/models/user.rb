@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
 
   has_many :favorites
 
+  has_many :hashtag_posts, through: :posts, source: :tags
+  
   has_many :followers, through: :follows_from_others, source: :follower
 
   has_many :followed_users, through: :follows_to_others, source: :followed_user

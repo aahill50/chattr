@@ -17,8 +17,10 @@ Chattr.Views.SessionNew = Backbone.View.extend({
 			url: "/api/session",
 			type: "post",
 			data: params,
-			dataType: "text",
+			dataType: "json",
 			success: function (data) {
+				Chattr.currentUser = Chattr.Collections.users.get(data.id);
+				Chattr.currentUser.fetch();
 				Backbone.history.navigate("/posts", { trigger: true })
 			},
 			error: function () {

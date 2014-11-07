@@ -13,13 +13,13 @@ module Api
     def create
       @favorite = Favorite.new(favorite_params)
       current_user.favorites.create(favorite_params)
-      render text: "fav created"
+      render json: @favorite
     end
 
     def destroy
       @favorite = Favorite.find(params[:id])
       current_user.favorites.destroy(@favorite)
-      render text: "fav destroyed"
+      render json: @favorite
     end
 
     private

@@ -4,13 +4,13 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     this.favs = new Chattr.Collections.Favorites;
     this.favs.fetch();
     this.listenTo(this.posts, "add remove", this.render);
-    this.listenTo(this.favs, "add remove sync", this.render);
+    this.listenTo(this.favs, "sync", this.render);
   },
 
   events: {
     "submit .new-post": "submitNewPost",
     "focus .index-profile .closed": "expandForm",
-    "blur .index-profile": "closeForm",
+    "blur form": "closeForm",
     "click button.reply": "setupReply",
     "click button.repost": "setupRepost",
     "keyup .post .new-post": "updateCharCounter",
@@ -18,7 +18,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     "click button.favorite": "toggleFavorite",
     "click .delete-post": "deletePost"
   },
-
+	
   template: JST["posts/index"],
 
   tagName: 'section',
@@ -27,8 +27,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
 
   render: function () {
     var content = this.template({
-      posts: this.posts,
-      currentUser: Chattr.currentUser
+      posts: this.posts
     });
     this.$el.html(content);
     return this;
@@ -56,10 +55,12 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   },
 
   closeForm: function (event) {
-    $(event.target).closest('form').addClass("closed");
-    var $profile = $(event.target).closest('.index-profile')
-    var $charCounter = $profile.find('.char-counter')
-    $charCounter.text("")
+		window.setTimeout( function () {
+	    $(event.target).closest('form').addClass("closed");
+	    var $profile = $(event.target).closest('.index-profile')
+	    var $charCounter = $profile.find('.char-counter')
+	    $charCounter.text("")
+		}, 200);
   },
 
   setupRepost: function (event) {
@@ -92,14 +93,24 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
       favoriteable_id: post.id
     }
 
-    if(post.get("favorited")) {
-      var fav = this.favs.get(post.get("favorite_id"))
-      fav.destroy();
-    } else {
-      this.favs.create(fav_options)
-    }
-
-
+		if(post.get("favorited")) {
+			var fav = this.favs.get(post.get("favorite_id"))
+			fav.destroy({ 
+				wait: true,
+				success: function() {
+					that.posts.fetch()
+					that.favs.fetch()
+				}
+			});
+		} else {
+			this.favs.create(fav_options, { 
+				wait: true,
+				success: function() {
+					that.posts.fetch();
+					that.favs.fetch();
+				}
+			});
+		}
   },
 
   deletePost: function (event) {
