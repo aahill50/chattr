@@ -24,9 +24,14 @@ User.create(username:"aaron",
             bio:"I made this!",
             password:"password")
 
-USER_COUNT = 5
-POST_COUNT = 60
-FOLLOW_COUNT = 20
+USER_COUNT = 50
+POST_COUNT = 600
+FOLLOW_COUNT = 200
+BIO_STARTS = ["I like to ", "I believe we need to ", "I should probably ",
+              "I'm from a place where they like to ", "I don't know much about how to ",
+              "I would never ", "My passion is to ", "I can't ", "I should ",
+              "Every now and then, it's nice to "]
+BIO_ENDS = [".", "...", "!", "!!!", "\n ~Unknown", "\n ~Anon", "\n :)"]
 
 (USER_COUNT - 1).times do
   fname = Faker::Name.name
@@ -36,13 +41,13 @@ FOLLOW_COUNT = 20
   User.create(fullname: fname,
               username: uname,
               email: eml,
-              bio: Faker::Company.catch_phrase,
+              bio: BIO_STARTS.sample + Faker::Company.bs + (BIO_ENDS + ["\n~#{fname}"]).sample,
               password:"password",
               avatar_url: Faker::Avatar.image)
 end
 
 POST_COUNT.times do
-  Post.create(content:Faker::Company.catch_phrase,
+  Post.create(content:Faker::Hacker.say_something_smart,
               user_id: (1..USER_COUNT).to_a.sample)
 end
 

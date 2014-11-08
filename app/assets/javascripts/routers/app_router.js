@@ -14,8 +14,6 @@ Chattr.Routers.AppRouter = Backbone.Router.extend({
   },
 
   postsIndex: function () {
-    Chattr.Collections.posts.fetch();
-
     var postsIndexView = new Chattr.Views.PostsIndex({
       posts: Chattr.Collections.posts
     });

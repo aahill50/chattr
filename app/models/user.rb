@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
-  has_many :posts, order: "created_at DESC", inverse_of: :author, dependent: :destroy
+  has_many :posts, inverse_of: :author, dependent: :destroy
 
   has_many :follows_from_others,
       class_name: "UserFollow",
@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
     subquery_sql = self.followed_users.select("users.id")
 
     Post.all.select("posts.*")
-      .where(<<-SQL, self.id, subquery_sql ).order("posts.created_at DESC")
+      .where(<<-SQL, self.id, subquery_sql )
         posts.user_id = ? OR posts.user_id IN (?)
       SQL
   end

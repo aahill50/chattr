@@ -7,12 +7,10 @@ window.Chattr = {
     Chattr.Collections.posts = new Chattr.Collections.Posts;
 		Chattr.Collections.users = new Chattr.Collections.Users;
 		Chattr.Collections.hashtags = new Chattr.Collections.Hashtags;
+
 		Chattr.currentUser = new Chattr.Models.User ({ id: currentUserId })
 		Chattr.searchHandler = new Chattr.Views.SearchHandler();
 		
-		Chattr.Collections.posts.fetch();
-		Chattr.Collections.users.fetch();
-		Chattr.Collections.hashtags.fetch();
 		Chattr.currentUser.fetch();
 		
     

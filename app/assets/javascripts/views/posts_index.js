@@ -2,9 +2,11 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   initialize: function (options) {
     this.posts = options.posts;
     this.favs = new Chattr.Collections.Favorites;
+		this.posts.fetch();
     this.favs.fetch();
+		
     this.listenTo(this.posts, "add remove", this.render);
-    this.listenTo(this.favs, "sync", this.render);
+    this.listenTo(this.favs, "add remove", this.render);
   },
 
   events: {
@@ -20,6 +22,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   },
 	
   template: JST["posts/index"],
+	indexProfileTemplate: JST["users/index_profile"],
 
   tagName: 'section',
 
@@ -27,7 +30,8 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
 
   render: function () {
     var content = this.template({
-      posts: this.posts
+      posts: this.posts,
+			index_profile: this.indexProfileTemplate()
     });
     this.$el.html(content);
     return this;

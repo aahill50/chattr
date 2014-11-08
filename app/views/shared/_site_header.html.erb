@@ -1,69 +1,9 @@
 <header id="site-header" class="site-header group">
     <ul class="site-header-nav">
   <% if signed_in? %>
-	<script>
-		$(function () {
-			$('body').removeClass('unsigned')
-			$('#current-user').prop("href", "/#users/" + <%= current_user.id %>)
-			$('#home').prop("href", "/#")
-			
-			var $dropdownParent = $('.dropdown-parent')
-			var $dropdown = $('<ul>')
-			var $myProfileLi = $('<li>')
-			var $editUserLi = $('<li>')
-			var $signOutLi = $('<li>')
-			
-			var $oldSignOut = $('#sign-out')
-			var $myProfile = $('<a>')
-			var $editUser = $('<a>')
-			
-			$dropdown.addClass('user-menu')
-			$oldSignOut.addClass("in-dropdown")
-			$myProfile.prop("href", "/#users/" + <%= current_user.id %> )
-			$editUser.prop("href", "/users/" + <%= current_user.id %> + "/edit")
-			$myProfile.text("My Profile")
-			$editUser.text("Edit Profile")
-			$editUser.addClass("in-dropdown")
-			$myProfile.addClass("in-dropdown")
-			
-			$signOutLi.append($oldSignOut)
-			$editUserLi.append($editUser)
-			$myProfileLi.append($myProfile)
-			
-			$('#sign-out').remove()
-			$('#edit-user').remove()
-			
-			$dropdown.append($myProfileLi);
-			$dropdown.append($editUserLi);
-			$dropdown.append($signOutLi);
-			
-			$dropdownParent.append($dropdown)
-			
-			$dropdownParent.on("click", function (event) {
-				if ( $(event.target).parents('.user-menu').length > 0 ) {
-					return;
-				}
-				
-				event.preventDefault();	
-				$dropdown.addClass("active transitioning")
-				
-				window.setTimeout( function () {
-					$dropdown.removeClass("transitioning")
-				}, 0)
-			})
-			
-			$(window).on("mouseup", function (event) {
-				if ( $(event.target).parents('.user-menu').length > 0) {
-					return;
-				}
-				
-				$dropdown.removeClass("active")
-			})
-		})
-	</script>
       <li class="left"><a id="home" href="<%= root_url %>">Home</a></li>
       <!-- <li class="left"><a id="notifications" href="#">Notifications</a></li> -->
-      <li class="left"><a id="messages" href="/#hashtags">#Discover</a></li>
+      <li class="left"><a id="discover" href="/#hashtags">#Discover</a></li>
       <li class="right"><a id="new-post" href="<%= new_post_url %>">New Post</a></li>
 
       <li class="right">
@@ -92,11 +32,6 @@
       </li>
 
   <% else %>
-	<script>
-		$(function () {
-			$('body').addClass('unsigned')
-		})
-	</script>
 	    <li class="right"><a id="sign-in" href="<%= new_session_url %>" class="right">Sign In</a></li>
 	    <li class="right"><a id="sign-up" href="<%= new_user_url %>" class="right">Sign Up</a></li>
 	<% end %>
@@ -105,3 +40,70 @@
 		</li>
 	</ul>
 </header>
+
+<script>
+  <% if signed_in? %>
+		$(function () {
+			$('body').removeClass('unsigned')
+			$('#current-user').prop("href", "/#users/" + <%= current_user.id %>)
+			$('#home').prop("href", "/#")
+		
+			var $dropdownParent = $('.dropdown-parent')
+			var $dropdown = $('<ul>')
+			var $myProfileLi = $('<li>')
+			var $editUserLi = $('<li>')
+			var $signOutLi = $('<li>')
+		
+			var $oldSignOut = $('#sign-out')
+			var $myProfile = $('<a>')
+			var $editUser = $('<a>')
+		
+			$dropdown.addClass('user-menu')
+			$oldSignOut.addClass("in-dropdown")
+			$myProfile.prop("href", "/#users/" + <%= current_user.id %> )
+			$editUser.prop("href", "/users/" + <%= current_user.id %> + "/edit")
+			$myProfile.text("My Profile")
+			$editUser.text("Edit Profile")
+			$editUser.addClass("in-dropdown")
+			$myProfile.addClass("in-dropdown")
+		
+			$signOutLi.append($oldSignOut)
+			$editUserLi.append($editUser)
+			$myProfileLi.append($myProfile)
+		
+			$('#sign-out').remove()
+			$('#edit-user').remove()
+		
+			$dropdown.append($myProfileLi);
+			$dropdown.append($editUserLi);
+			$dropdown.append($signOutLi);
+		
+			$dropdownParent.append($dropdown)
+		
+			$dropdownParent.on("click", function (event) {
+				if ( $(event.target).parents('.user-menu').length > 0 ) {
+					return;
+				}
+			
+				event.preventDefault();	
+				$dropdown.addClass("active transitioning")
+			
+				window.setTimeout( function () {
+					$dropdown.removeClass("transitioning")
+				}, 0)
+			})
+		
+			$(window).on("mouseup", function (event) {
+				if ( $(event.target).parents('.user-menu').length > 0) {
+					return;
+				}
+			
+				$dropdown.removeClass("active")
+			})
+		})
+  <% else %>
+		$(function () {
+			$('body').addClass('unsigned')
+		})
+	<% end %>
+</script>

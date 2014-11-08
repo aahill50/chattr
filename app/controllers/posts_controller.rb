@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_filter :require_signed_in!
 
   def index
-    @posts = current_user.main_feed_posts
+    @posts = current_user.main_feed_posts.order("created_at DESC")
     render :index
   end
 
