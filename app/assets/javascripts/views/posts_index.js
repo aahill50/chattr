@@ -1,9 +1,10 @@
 Chattr.Views.PostsIndex = Backbone.View.extend({
   initialize: function (options) {
     this.posts = options.posts;
-    this.favs = new Chattr.Collections.Favorites;
 		this.posts.fetch();
-    this.favs.fetch();
+   
+	  this.favs = new Chattr.Collections.Favorites;
+    this.favs.fetch();   
 		
     this.listenTo(this.posts, "add remove", this.render);
   },
@@ -42,13 +43,16 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     event.preventDefault();
     var that = this;
     var $post = $(event.currentTarget).closest('.post');
+		var $postCounter = $('.index-profile .post.count a');
 
     var params = $(event.currentTarget).serializeJSON()['post']
     var post = new Chattr.Models.Post(params)
 
     post.save([],{
       success: function (data) {
-        that.posts.add(post )
+				$postCounter.text( function () {
+					return parseInt($postCounter.text()) + 1
+				});
         $post.find('.repost-form').addClass("closed");
         $post.find('.reply-form').addClass("closed");
       }
@@ -125,7 +129,16 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     event.preventDefault();
     var postId = $(event.currentTarget).closest('.post').data('id')
     var post = this.posts.get(postId);
-    post.destroy();
+		
+		var $postCounter = $('.index-profile .post.count a');
+    post.destroy({
+    	success: function () {
+				console.log($postCounter.text())
+				$postCounter.text( function () {
+					return parseInt($postCounter.text()) - 1
+				});
+    	}
+    });
   },
 
   updateCharCounter: function (event) {

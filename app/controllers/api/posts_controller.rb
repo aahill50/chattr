@@ -22,7 +22,7 @@ module Api
     def destroy
       @post = current_user.posts.find(params[:id])
       current_user.posts.destroy(@post)
-      render text: "post has been deleted"
+      render @post
     end
 
     private
