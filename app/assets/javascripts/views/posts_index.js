@@ -6,9 +6,8 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     this.favs.fetch();
 		
     this.listenTo(this.posts, "add remove", this.render);
-    this.listenTo(this.favs, "add remove", this.render);
   },
-
+	
   events: {
     "submit .new-post": "submitNewPost",
     "focus .index-profile .closed": "expandForm",
@@ -23,6 +22,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
 	
   template: JST["posts/index"],
 	indexProfileTemplate: JST["users/index_profile"],
+	postTemplate: JST["posts/post"],
 
   tagName: 'section',
 
@@ -31,7 +31,8 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   render: function () {
     var content = this.template({
       posts: this.posts,
-			index_profile: this.indexProfileTemplate()
+			index_profile: this.indexProfileTemplate,
+			postTemplate: this.postTemplate
     });
     this.$el.html(content);
     return this;
@@ -88,9 +89,10 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   toggleFavorite: function(event) {
     event.preventDefault();
     var postId = $(event.currentTarget).data("post-id");
+		var $favButton = $(event.currentTarget)
     var post = this.posts.getOrFetch(postId);
     var that = this;
-
+		
     var fav_options = {
       user_id: Chattr.currentUser.id,
       favoriteable_type: "Post",
@@ -102,6 +104,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
 			fav.destroy({ 
 				wait: true,
 				success: function() {
+					$favButton.text("Favorite")
 					that.posts.fetch()
 					that.favs.fetch()
 				}
@@ -110,6 +113,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
 			this.favs.create(fav_options, { 
 				wait: true,
 				success: function() {
+					$favButton.text("Unfavorite")
 					that.posts.fetch();
 					that.favs.fetch();
 				}

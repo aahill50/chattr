@@ -1,6 +1,9 @@
 <article class="post group"data-id="<%= post.id %>">
-  <figure class="avatar">
-  </figure>
+	<a href="#users/<%= post.author().id %>">
+    <figure class="avatar">
+			<img src="<%= post.author().get("avatar_url") %>">
+    </figure>
+	</a>
 
   <section class="post-container">
     <section class="post-info">
@@ -9,7 +12,7 @@
       <div class="timestamp"><%= post.get("timestamp") %></div>
     </section>
 
-    <% if (post.author().id === currentUser.id ) { %>
+    <% if (post.author().id === Chattr.currentUser.id ) { %>
       <span class="delete-post">&times;</span>
     <% } %>
 
