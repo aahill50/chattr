@@ -14,7 +14,14 @@ module Api
       password = params[:user][:password]
       password_conf = params[:user][:password_confirmation]
       
-      if current_user.is_password?(password) && current_user.is_password?(password_conf)
+      if params[:user][:avatar_url] || [:user][:banner_url]
+        current_user.update(avatar_url: params[:user][:avatar_url],
+                            banner_url: params[:user][:banner_url])
+        render json: current_user
+      elsif params[:user][:banner_url]
+        current_user.update(banner_url: params[:user][:banner_url])
+        render json: current_user
+      elsif current_user.is_password?(password) && current_user.is_password?(password_conf)
         if current_user.update(user_params)
           render json: current_user
         end
