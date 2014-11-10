@@ -1,9 +1,12 @@
 Chattr.Views.HashtagShow = Backbone.View.extend({
 	initialize: function (options) {
 		this.tag = options.tag;
-		postTags = this.tag.taggedPosts()
+		Chattr.tag = this.tag
+		this.posts = this.tag.taggedPosts();
 
-		// this.listenTo(this.posts, "add", this.render);
+		this.posts.fetch();
+
+		this.listenTo(this.posts, "add", this.render);
 	},
 	
   events: {
@@ -17,13 +20,20 @@ Chattr.Views.HashtagShow = Backbone.View.extend({
     "click button.favorite": "toggleFavorite",
     "click .delete-post": "deletePost"
   },
+	
+	tagName: 'section',
+	id: 'body-bottom',
 
   template: JST["hashtags/show"],
-
+	indexProfileTemplate: JST["users/index_profile"],
+	postsTemplate: JST["hashtags/post"],
+	
   render: function () {
     var content = this.template({
 			tag: this.tag,
-			posts: this.posts
+			posts: this.posts,
+			index_profile: this.indexProfileTemplate,
+			postsTemplate: this.postsTemplate
 		})
     this.$el.html(content)
     return this;
@@ -33,17 +43,19 @@ Chattr.Views.HashtagShow = Backbone.View.extend({
     event.preventDefault();
     var that = this;
     var $post = $(event.currentTarget).closest('.post');
+		var $form = $(event.target).closest('form')
 
     var params = $(event.currentTarget).serializeJSON()['post']
     var post = new Chattr.Models.Post(params)
 
     post.save([],{
       success: function (data) {
-        that.childrenPosts.add(post)
+        that.posts.add(post)
+				$form.find('textarea').empty()
         $post.find('.repost-form').addClass("closed");
         $post.find('.reply-form').addClass("closed");
       }
-    })
+    });
   },
 
   expandForm: function (event) {

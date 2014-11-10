@@ -13,20 +13,28 @@ Chattr.Models.Post = Backbone.Model.extend({
 		if (!this._childrenPosts) {
 			this._childrenPosts = new Chattr.Collections.Posts([], { parent_post_id: this })
 		}
-		
 		return this._childrenPosts;
+	},
+	
+	favorites: function () {
+		if (!this._favorites) {
+			this._favorites = new Chattr.Collections.Favorites([], { favoriteable_id: this, favoriteable_type: "Post"})
+		}
+		return this._favorites
 	},
 
   parse: function (resp) {
-		// debugger
-  //   console.log("debugging post mode")
     if (resp.children_posts) {
 			this.childrenPosts().set(resp.children_posts, { parse: true })
 			delete resp.children_posts
     }
     if (resp.author) {
-      this.author(resp.author).set(this._author, { parse: true })
+      this.author(resp.author).set(resp.author, { parse: true })
       delete resp.author
+    }
+    if (resp.favorites) {
+      this.favorites().set(resp.favorites, { parse: true })
+      delete resp.favorites
     }
     return resp
   },

@@ -11,121 +11,31 @@
 	<figure class="ribbon">
 		<ul class="profile-nav">
 			<li class="left">
-        <a href="#">Posts</a>
+        <a id="posts-link" class="active" href="/#users/<%= user.id %>">Posts</a>
       </li>
 			<li class="left">
-        <a href="/users/<%= user.id %>/following">Following</a>
+        <a id="following-link" href="#/users/<%= user.id %>/following">Following</a>
       </li>
 			<li class="left">
-        <a href="/users/<%= user.id %>/followers">Followers</a>
+        <a id="followers-link" href="#/users/<%= user.id %>/followers">Followers</a>
       </li>
 			<li class="left">
-        <a href="/users/<%= user.id %>/favorite_posts">Favorite Posts</a>
+        <a id="fav-posts-link" href="#/users/<%= user.id %>/favorite_posts">Favorite Posts</a>
       </li>
 			<li class="left">
-        <a href="#">Favorite Users</a>
+        <a id="fav-users-link" href="#">Favorite Users</a>
       </li>
 		</ul>
 	</figure>
 </section>
 
-<main id="main-content">
-	<section class="main-user-info">
-		<figure class="avatar-large">
-			<img src="<%= user.get("avatar_url") %>">
-		</figure>
-			
-	  <div class="fullname"><%= user.get("fullname") %></div>
-	  <div class="username"><%= user._username() %></div>
-	  <div class="join-date">Joined <%= user.get("join_date") %></div>
-	  <div class="bio"><%= user.get("bio") %></div>
-	  <% if (Chattr.currentUser.id !== user.id) { %>
-			<button id="user-follow">
-	    <% if (user.get("is_followed_by_current_user")) { %>
-				Unfollow this User
-			<% } else { %>
-				Follow this User
-			<% } %>
-			</button>
-	  <% } %>
+<section id="user-show">
+	<%= userProfileTemplate({ user: user }) %>
+
+	<section class="posts-container">
+	  <header class="title"><h2>Posts from <%= user.get("_username") %></h2></header>
+	  <% posts.each( function(post) { %>
+	  	<%= postsTemplate({ post: post }) %>
+	  <% }) %>
 	</section>
-</main>
-
-<section class="posts-container">
-  <header class="title"><h2>Posts BACKBONE</h2></header>
-
-  <% posts.each( function(post) { %>
-  <article class="post group"data-id="<%= post.id %>">
-    <figure class="avatar">
-			<img src="<%= user.get("avatar_url") %>">
-    </figure>
-    <section class="post-container">
-      <section class="post-info">
-        <div class="fullname"><%= user.get("fullname") %></div>
-        <div class="username"><%= user._username() %></div>
-        <div class="timestamp"><%= post.get("timestamp") %></div>
-      </section>
-
-      <span class="delete-post">&times;</span>
-
-      <section class="post-content">
-        <div class="text"><%= post.get("content") %></div>
-
-        <section class="buttons-container">
-          <form action="#">
-            <input type="hidden"
-                   name="post[parent_post_id]"
-                   value="<%= post.id %>">
-            <button class="reply post-option"
-              data-post-id="<%= post.id %>">Reply</button>
-          </form>
-
-          <form action="#">
-            <input type="hidden"
-                   name="post[content]">
-            <button class="repost post-option"
-              data-post-id="<%= post.id %>">Repost</button>
-          </form>
-
-          <form action="#">
-            <input type="hidden"
-                   name="fav[favoriteable_id]"
-                   value="<%= post.id %>">
-            <input type="hidden"
-                   name="fav[favoriteable_type]"
-                   value="Post">
-            <button class="favorite post-option"
-              data-post-id="<%= post.id %>">
-              <% if (post.get("favorited")) { %>
-                Unfavorite
-              <% } else { %>
-                Favorite
-              <% } %>
-            </button>
-          </form>
-        </section>
-
-        <form class="new-post reply-form closed">
-          <input type="hidden"
-                 name="post[parent_post_id]"
-                 value="<%= post.id %>">
-          <textarea
-            class="new-inline-post closed"
-            name="post[content]"
-            placeholder="Reply to this post..."></textarea>
-          <button>Post Reply!</button>
-        </form>
-
-        <form class="new-post repost-form closed">
-          <textarea
-            class="new-inline-post"
-            name="post[content]"><%= post.formatForRP() %></textarea>
-          <button>Post!</button>
-        </form>
-        <span class="char-counter"></span>
-
-      </section>
-    </section>
-  </article>
-  <% }) %>
 </section>

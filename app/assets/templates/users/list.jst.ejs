@@ -1,0 +1,21 @@
+<% users.each( function(user) { %>
+	<article class="post group"data-id="<%= user.id %>">
+		<a href="#users/<%= user.id %>">
+	    <figure class="avatar">
+				<img src="<%= user.get("avatar_url") %>">
+	    </figure>
+		</a>
+
+	  <section class="post-container">
+	    <section class="post-info">
+	      <div class="fullname"><%= user.get("fullname") %></div>
+	      <div class="username"><%= user._username() %></div>
+	    </section>
+
+	    <section class="post-content">
+				<div class="user-bio"><%= user.get("bio") %></div>
+			</section>
+
+	  </section>
+	</article>
+<% }); %>

@@ -22,10 +22,16 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
     "keyup .reply-form, .repost-form": "updateCharCounter",
 		"click .main-user-info .avatar-large": "uploadNewImage",
 		"click .profile-banner": "uploadNewBanner",
-		"click #user-follow": "toggleFollow"
+		"click #user-follow": "toggleFollow",
+		"click .profile-nav": "changeActiveLink"
   },
 
   template: JST["users/show"],
+	userProfileTemplate: JST["users/user_profile"],
+	postsTemplate: JST["posts/post"],
+	followTemplate: JST["users/list"],
+	favoritePostsTemplate: JST["posts/post"],
+	favoriteUsersTemplate: JST["users/list"],
 
   tagName: 'main',
 
@@ -34,7 +40,9 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
   render: function () {
     var content = this.template({
       user: this.user,
-      posts: this.posts
+      posts: this.posts,
+			userProfileTemplate: this.userProfileTemplate,
+			postsTemplate: this.postsTemplate
     })
 
     this.$el.html(content);
@@ -185,6 +193,67 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
 				that.user.set({"banner_url": blob.url})
 				that.user.save();
 		  });
+		}
+	},
+	
+	changeActiveLink: function (event) {
+		event.preventDefault();
+		var that = this;
+		$newActiveLink = $(event.target)
+		$newActiveLink.addClass("active")
+		$newActiveLink.parent().siblings().children().removeClass("active");
+		
+		$linkText = $newActiveLink.text();
+
+		if ($linkText === "Posts") {
+			this.render()
+		} else if ($linkText === "Following") {
+			var followedUsers = this.user.followedUsers()
+
+			followedUsers.fetch({
+				success: function () {
+					$newHeader = $("<header>")
+					$newHeader.addClass("title")
+					$newHeader.append("<h2>Following</h2>")
+					
+					$('.posts-container').html($newHeader)
+					$('.posts-container').append(that.followTemplate({users: followedUsers}))
+				}
+			})		
+		} else if ($linkText === "Followers") {
+			var followers = this.user.followers()
+
+			followers.fetch({
+				success: function () {
+					$newHeader = $("<header>")
+					$newHeader.addClass("title")
+					$newHeader.append("<h2>Followers</h2>")
+					
+					$('.posts-container').html($newHeader)
+					$('.posts-container').append(that.followTemplate({users: followers}))
+				}
+			})	
+		} else if ($linkText === "Favorite Posts") {
+			$newHeader = $("<header>")
+			$newHeader.addClass("title")
+			$newHeader.append("<h2>Favorite Posts</h2>")
+			
+			var favoritePosts = this.user.favoritePosts();
+			
+			favoritePosts.fetch({
+				success: function () {
+					$('.posts-container').html($newHeader)
+					$('.posts-container').append(that.favoritePostsTemplate({ user: that.user, posts: favoritePosts }))
+				}
+			})
+			
+		} else if ($linkText === "Favorite Users") {
+			$newHeader = $("<header>")
+			$newHeader.addClass("title")
+			$newHeader.append("<h2>Favorite Users</h2>")
+			
+			$('.posts-container').html($newHeader)
+			$('.posts-container').append("ALL THE FAVORITE USERS")
 		}
 	}
 	

@@ -21,5 +21,7 @@ Chattr.Collections.Hashtags = Backbone.Collection.extend({
     return tag
   },
 	
-	
+	comparator: function (tag) {
+		return -tag.taggedPosts().length;
+	}
 });

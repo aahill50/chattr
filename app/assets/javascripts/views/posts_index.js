@@ -3,9 +3,6 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     this.posts = options.posts;
 		this.posts.fetch();
    
-	  this.favs = new Chattr.Collections.Favorites;
-    this.favs.fetch();   
-		
     this.listenTo(this.posts, "add remove", this.render);
   },
 	
@@ -50,9 +47,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
 
     post.save([],{
       success: function (data) {
-				$postCounter.text( function () {
-					return parseInt($postCounter.text()) + 1
-				});
+				that.posts.add(post);
         $post.find('.repost-form').addClass("closed");
         $post.find('.reply-form').addClass("closed");
       }
@@ -60,34 +55,48 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
   },
 
   expandForm: function (event) {
-    $(event.currentTarget).removeClass("closed");
+		$form = $(event.currentTarget)
+    $form.removeClass("closed");
   },
 
   closeForm: function (event) {
+		$form = $(event.currentTarget);
 		window.setTimeout( function () {
-	    $(event.target).closest('form').addClass("closed");
-	    var $profile = $(event.target).closest('.index-profile')
-	    var $charCounter = $profile.find('.char-counter')
-	    $charCounter.text("")
+			$form.addClass("closing")
+			
+			window.setTimeout( function () {
+				$form.removeClass("closing")
+			    $form.addClass("closed");
+			}, 200);
 		}, 200);
-  },
-
-  setupRepost: function (event) {
-    event.preventDefault();
-    var $post = $(event.currentTarget).closest('.post');
-    $post.find('.repost-form').removeClass("closed");
-    $post.find('.repost-form textarea').focus();
-    $post.find('.reply-form').addClass("closed");
-
   },
 
   setupReply: function (event) {
     event.preventDefault();
     var $post = $(event.currentTarget).closest('.post');
-    $post.find('.reply-form').removeClass("closed");
-    $post.find('.reply-form textarea').focus();
-    $post.find('.repost-form').addClass("closed");
+		$post.find('.reply-form').addClass("opening");
+		
+		window.setTimeout( function () {
+	    $post.find('.reply-form').removeClass("closed");
+	    $post.find('.reply-form').removeClass("opening");
+	    $post.find('.reply-form textarea').focus();
+		}, 0);
 
+    $post.find('.repost-form').addClass("closed");
+  },
+
+  setupRepost: function (event) {
+    event.preventDefault();
+    var $post = $(event.currentTarget).closest('.post');
+		$post.find('.repost-form').addClass("opening");
+		
+		window.setTimeout( function () {
+	    $post.find('.repost-form').removeClass("closed");
+			$post.find('.repost-form').removeClass("opening");
+	    $post.find('.repost-form textarea').focus();
+		}, 0);
+
+    $post.find('.reply-form').addClass("closed");
   },
 
   toggleFavorite: function(event) {
@@ -95,6 +104,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     var postId = $(event.currentTarget).data("post-id");
 		var $favButton = $(event.currentTarget)
     var post = this.posts.getOrFetch(postId);
+		this.favs = post.favorites()
     var that = this;
 		
     var fav_options = {

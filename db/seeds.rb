@@ -24,9 +24,9 @@ User.create(username:"aaron",
             bio:"I made this!",
             password:"password")
 
-USER_COUNT = 50
-POST_COUNT = 600
-FOLLOW_COUNT = 200
+USER_COUNT = 10
+POST_COUNT = 10
+FOLLOW_COUNT = 0
 BIO_STARTS = ["I like to ", "I believe we need to ", "I should probably ",
               "I'm from a place where they like to ", "I don't know much about how to ",
               "I would never ", "My passion is to ", "I can't ", "I should ",

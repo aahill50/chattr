@@ -2,6 +2,7 @@ Chattr.Views.PostShow = Backbone.View.extend({
 	initialize: function (options) {
 		this.post = options.post;
 		this.childrenPosts = this.post.childrenPosts();
+		// this.childrenPosts.fetch();
  		var that = this;
 		
 		this.listenTo(this.post, "add", this.render);
@@ -21,11 +22,16 @@ Chattr.Views.PostShow = Backbone.View.extend({
   },
 
   template: JST["posts/show"],
+	postsTemplate: JST["posts/post"],
+	
+	tagName: 'section',
+	id: 'body-bottom',
 
   render: function () {
     var content = this.template({
 			post: this.post,
-		  childrenPosts: this.childrenPosts
+		  childrenPosts: this.childrenPosts,
+			postsTemplate: this.postsTemplate
 		})
     this.$el.html(content)
     return this;

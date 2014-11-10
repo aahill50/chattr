@@ -1,26 +1,24 @@
 <article class="post group"data-id="<%= post.id %>">
-	<a href="#users/<%= post.author().id %>">
+	<a href="#users/<%= post.get("author").id %>">
     <figure class="avatar">
-			<img src="<%= post.author().get("avatar_url") %>">
+			<img src="<%= post.get("author").avatar_url %>">
     </figure>
 	</a>
 
   <section class="post-container">
     <section class="post-info">
-      <div class="fullname"><%= post.author().get("fullname") %></div>
-      <div class="username"><%= post.author()._username() %></div>
+      <div class="fullname"><%= post.get("author").fullname %></div>
+      <div class="username">@<%= post.get("author").username %></div>
       <div class="timestamp"><%= post.get("timestamp") %></div>
     </section>
 
-    <% if (post.author().id === Chattr.currentUser.id ) { %>
+    <% if (post.get("author").id === Chattr.currentUser.id ) { %>
       <span class="delete-post">&times;</span>
     <% } %>
 
     <section class="post-content">
-			<a href="/#posts/<%= post.id %>">
-	      <div class="text"><%= post.get("content") %></div>
-			</a>
-			
+      <div class="text"><%= post.get("content") %></div>
+
       <section class="buttons-container">
         <form action="#">
           <input type="hidden"
@@ -70,7 +68,7 @@
       <form class="new-post repost-form closed">
         <textarea
           class="new-inline-post"
-          name="post[content]"><%= post.formatForRP() %></textarea>
+          name="post[content]">rp-@<%= post.get("author").username %>: <%= post.get("content") %></textarea>
         <button>Post!</button>
 	      <span class="char-counter"></span>
       </form>

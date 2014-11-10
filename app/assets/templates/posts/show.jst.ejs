@@ -55,7 +55,7 @@
 </section>
 
 <section class="posts-container">
-  <header class="title"><h2>Posts BACKBONE</h2></header>
+  <header class="title"><h2>Posts</h2></header>
 	
   <article class="post group"data-id="<%= post.id %>">
 		<a href="#users/<%= post.author().id %>">
@@ -70,13 +70,14 @@
         <div class="username"><%= post.get("author_username") %></div>
         <div class="timestamp"><%= post.get("timestamp") %></div>
       </section>
-
       <% if (post.author().id === Chattr.currentUser.id ) { %>
         <span class="delete-post">&times;</span>
       <% } %>
 
       <section class="post-content">
-        <div class="text"><%= post.get("content") %></div>
+				<a href="/#posts/<%= post.id %>">
+	        <div class="text"><%= post.get("content") %></div>
+				</a>
 
         <section class="buttons-container">
           <form action="#">
@@ -136,82 +137,6 @@
   </article>
 
   <% childrenPosts.each( function(childPost) { %>
-	  <article class="post group"data-id="<%= childPost.id %>">
-			<a href="#users/<%= childPost.author().id %>">
-		    <figure class="avatar">
-					<img src="<%= childPost.get("author_avatar_url") %>">
-		    </figure>
-			</a>
-
-	    <section class="post-container">
-	      <section class="post-info">
-	        <div class="fullname"><%= childPost.author_fullname %></div>
-	        <div class="username"><%= childPost.author_username %></div>
-	        <div class="timestamp"><%= childPost.get("timestamp") %></div>
-	      </section>
-
-	      <% if (childPost.get("author_id") === Chattr.currentUser.id ) { %>
-	        <span class="delete-post">&times;</span>
-	      <% } %>
-
-	      <section class="post-content">
-	        <div class="text"><%= childPost.get("content") %></div>
-
-	        <section class="buttons-container">
-	          <form action="#">
-	            <input type="hidden"
-	                   name="post[parent_post_id]"
-	                   value="<%= childPost.id %>">
-	            <button class="reply post-option"
-	              data-post-id="<%= childPost.id %>">Reply</button>
-	          </form>
-
-	          <form action="#">
-	            <input type="hidden"
-	                   name="post[content]">
-	            <button class="repost post-option"
-	              data-post-id="<%= childPost.id %>">Repost</button>
-	          </form>
-
-	          <form action="#">
-	            <input type="hidden"
-	                   name="fav[favoriteable_id]"
-	                   value="<%= childPost.id %>">
-	            <input type="hidden"
-	                   name="fav[favoriteable_type]"
-	                   value="Post">
-	            <button class="favorite post-option"
-	              data-post-id="<%= childPost.id %>">
-	              <% if (childPost.get("favorited")) { %>
-	                Unfavorite
-	              <% } else { %>
-	                Favorite
-	              <% } %>
-	            </button>
-	          </form>
-	        </section>
-
-	        <form class="new-post reply-form closed">
-	          <input type="hidden"
-	                 name="post[parent_post_id]"
-	                 value="<%= childPost.id %>">
-	          <textarea
-	            class="new-inline-post closed"
-	            name="post[content]"
-	            placeholder="Reply to this post..."></textarea>
-	          <button>Post Reply!</button>
-	        </form>
-
-	        <form class="new-post repost-form closed">
-	          <textarea
-	            class="new-inline-post"
-	            name="post[content]"><%= childPost.formatForRP() %></textarea>
-	          <button>Post!</button>
-	        </form>
-	        <span class="char-counter"></span>
-
-	      </section>
-	    </section>
-	  </article>
+	  <%= postsTemplate({post: childPost}) %>
   <% }) %>
 </section>

@@ -1,0 +1,21 @@
+<main id="main-content">
+	<section class="main-user-info">
+		<figure class="avatar-large">
+			<img src="<%= user.get("avatar_url") %>">
+		</figure>
+			
+	  <div class="fullname"><%= user.get("fullname") %></div>
+	  <div class="username"><%= user.get("_username") %></div>
+	  <div class="join-date">Joined <%= user.get("join_date") %></div>
+	  <div class="bio"><%= user.get("bio") %></div>
+	  <% if (Chattr.currentUser.id !== user.id) { %>
+			<button id="user-follow">
+	    <% if (user.get("is_followed_by_current_user")) { %>
+				Unfollow this User
+			<% } else { %>
+				Follow this User
+			<% } %>
+			</button>
+	  <% } %>
+	</section>
+</main>

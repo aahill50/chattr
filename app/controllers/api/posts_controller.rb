@@ -1,7 +1,7 @@
 module Api
   class PostsController < ApiController
     def index
-      @posts = current_user.main_feed_posts.includes(:favorites)
+      @posts = current_user.main_feed_posts.includes(:favorites, :author).references(:favorites, :author)
       render :index
     end
 

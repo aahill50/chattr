@@ -2,7 +2,7 @@
   position: absolute;
   width: 290px;
   min-height: 290px;
-  margin: 0 5px;
+  margin-left: 10px;
   left: 0;
   background: white;
   border-radius: 5px;
@@ -127,7 +127,7 @@
   height: 40px;
   top: 230px;
   border-radius: 0 0 5px 5px;
-  padding: 10px;
+  padding: 10px 10px 25px 10px;
 }
 
 .index-profile form.closed button {
@@ -155,7 +155,6 @@
 
 .index-profile .char-counter {
   position: absolute;
-  top: 365px;
+  bottom: 5px;
   left: 10px;
-  background: orange;
 }

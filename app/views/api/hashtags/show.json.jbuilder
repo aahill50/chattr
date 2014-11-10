@@ -8,11 +8,14 @@ def get_fav_id(post)
   fav ? fav.id : nil
 end
 
-json.array! @hashtag.tagged_posts do |post|
-  json.extract! post, :id, :content, :author, :favorites, :created_at
-  json.author_username post.author._username
-  json.timestamp time_ago_in_words(post.created_at) + " ago"
-  json.favorited current_user.favorited?(post)
-  json.favorite_id get_fav_id(post)
+json.extract! @hashtag, :id, :tag
+json.tagged_posts do
+  json.array! @hashtag.tagged_posts do |post|
+    json.extract! post, :id, :content, :author, :favorites, :created_at
+    json.author_username post.author._username
+    json.timestamp time_ago_in_words(post.created_at) + " ago"
+    json.favorited current_user.favorited?(post)
+    json.favorite_id get_fav_id(post)
+    end
 end
 

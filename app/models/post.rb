@@ -18,7 +18,7 @@ class Post < ActiveRecord::Base
 
   has_many :tags, class_name: "PostTag", dependent: :destroy
   
-  has_many :favorites, as: :favoriteable
+  has_many :favorites, as: :favoriteable, dependent: :destroy
   
   after_save :register_hashtags
   

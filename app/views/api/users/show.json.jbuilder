@@ -10,7 +10,7 @@ end
 json.extract! @user, 
 	:id, :fullname, :_username, :email, 
   :post_count, :follower_count, :following_count, 
-  :join_date, :bio, :avatar_url, :banner_url, :follows_from_others, :follows_to_others,
+  :join_date, :bio, :avatar_url, :banner_url, :follows_from_others, :follows_to_others, :favorite_posts
   :hashtag_posts
   
 json.is_followed_by_current_user followed_by_current_user?

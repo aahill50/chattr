@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id]).includes(:main_feed_posts)
+    @user = User.find(params[:id])
     @profile_type = 'posts'
     render :show
   end

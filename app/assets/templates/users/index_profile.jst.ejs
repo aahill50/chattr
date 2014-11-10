@@ -1,4 +1,4 @@
-<section class="index-profile">
+<section class="index-profile group">
   <section class="top">
 		<figure class="mini-banner">
 			<img src="<%= Chattr.currentUser.get("banner_url") %>">
@@ -50,6 +50,6 @@
       placeholder="Compose new Post..."
       name="post[content]"></textarea>
       <button class="inactive">Post!</button>
+	  <span class="char-counter"></span>
   </form>
-  <span class="char-counter"></span>
 </section>
