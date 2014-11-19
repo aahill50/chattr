@@ -8,7 +8,7 @@
     </figure>
   </section>
 	
-  <a href="#">
+  <a href="/#users/<%= Chattr.currentUser.id %>" title="Click this to go to your profile">
 		<section class="names">
 	    <div class="fullname"><%= Chattr.currentUser.get("fullname") %></div>
 	    <div class="username"><%= Chattr.currentUser.get("_username") %></div>
@@ -45,11 +45,11 @@
 		</div>
   </section>
 
-  <form class="new-post closed" action="#">
+  <form class="new-post closed" action="#" title="Write a post!">
     <textarea
       placeholder="Compose new Post..."
       name="post[content]"></textarea>
-      <button class="inactive">Post!</button>
+      <button class="inactive" title="Add your post to chattr!">Post!</button>
 	  <span class="char-counter"></span>
   </form>
 </section>

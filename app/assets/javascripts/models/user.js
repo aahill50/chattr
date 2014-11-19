@@ -14,21 +14,22 @@ Chattr.Models.User = Backbone.Model.extend({
 	
 	favoritePosts: function () {
 		if (!this._fav_posts) {
-			this._fav_posts = new Chattr.Collections.Favorites({ user_id: this.id })
+			this._fav_posts = new Chattr.Collections.Posts(this.get("favorite_posts"), { parse: true })
+			this._fav_posts.fetch();
 		}
 		return this._fav_posts;
 	},
 	
 	followedUsers: function () {
 		if (!this._followedUsers) {
-			this._followedUsers = new Chattr.Collections.Users(this.get("follows_to_others"), { parse: true })
+			this._followedUsers = new Chattr.Collections.Users(this.get("followed_users"), { parse: true })
 		}
 		return this._followedUsers;		
 	},
 	
 	followers: function () {
 		if (!this._followers) {
-			this._followers = new Chattr.Collections.Users(this.get("follows_from_others"), { parse: true })
+			this._followers = new Chattr.Collections.Users(this.get("followers"), { parse: true })
 		}
 		return this._followers;			
 	},
@@ -42,13 +43,13 @@ Chattr.Models.User = Backbone.Model.extend({
 			this.favoritePosts().set(resp.favorite_posts)
 			delete resp.favorite_posts
 		}
-		if (resp.follows_to_others) {
-			this.followedUsers().set(resp.follows_to_others)
-			delete resp.follows_to_others
+		if (resp.followed_users) {
+			this.followedUsers().set(resp.followed_users)
+			delete resp.followed_users
 		}
-		if (resp.follows_from_others) {
-			this.followers().set(resp.follows_from_others)
-			delete resp.follows_from_others
+		if (resp.followers) {
+			this.followers().set(resp.followers)
+			delete resp.followers
 		}
 		return resp
 	}

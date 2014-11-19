@@ -1,5 +1,5 @@
 <article class="post group"data-id="<%= post.id %>">
-	<a href="#users/<%= post.author().id %>">
+	<a href="#users/<%= post.author().id %>" title="See this user's profile">
     <figure class="avatar">
 			<img src="<%= post.author().get("avatar_url") %>">
     </figure>
@@ -13,16 +13,16 @@
     </section>
 
     <% if (post.author().id === Chattr.currentUser.id ) { %>
-      <span class="delete-post">&times;</span>
+      <span class="delete-post" title="Delete this post forever...">&times;</span>
     <% } %>
 
     <section class="post-content">
-			<a href="/#posts/<%= post.id %>">
+			<a href="/#posts/<%= post.id %>" title="See this post and all replies to it (if any)">
 	      <div class="text"><%= post.get("content") %></div>
 			</a>
 			
       <section class="buttons-container">
-        <form action="#">
+        <form action="#" title="Reply to this post and add to the conversation">
           <input type="hidden"
                  name="post[parent_post_id]"
                  value="<%= post.id %>">
@@ -30,14 +30,14 @@
             data-post-id="<%= post.id %>">Reply</button>
         </form>
 
-        <form action="#">
+        <form action="#" title="Like what this user has to say? Repost it!">
           <input type="hidden"
                  name="post[content]">
           <button class="repost post-option"
             data-post-id="<%= post.id %>">Repost</button>
         </form>
 
-        <form action="#">
+        <form action="#" title="Love this post? Mark it as a favorite!">
           <input type="hidden"
                  name="fav[favoriteable_id]"
                  value="<%= post.id %>">

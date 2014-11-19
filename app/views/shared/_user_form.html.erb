@@ -78,7 +78,32 @@
 					 placeholder="Confirm your password">
 	</div>
          <% end %>
-	<div class="form-group group">
+	
+	<div class="form-group group buttons">
 		<button id="sign-in" class="submit"><%= button_name %></button>
 	</div>
 </form>
+
+<script>
+	$(function () {
+		var $buttonDiv = $('.user-form .buttons');
+		var $demoButton = $('<button>');
+	
+		$buttonDiv.prepend($demoButton);
+		$demoButton.addClass("submit demo");
+		$demoButton.attr("id", "sign-in");
+		$demoButton.text("Sign in as Demo User");
+
+		$demoButton.on("click", function (event) {
+			event.preventDefault();
+			
+			$.ajax({
+				type: 'get',
+				url: '/users/demo',
+				success: function () {
+					window.location.replace('/#')
+				}
+			})
+		})
+	})
+</script>

@@ -1,5 +1,6 @@
 Chattr::Application.routes.draw do
   root to: 'posts#index'
+  get 'users/demo', to: 'users#demo'
   resources :users, except: [:destroy] do
     resources :posts, only: [:new]
   end

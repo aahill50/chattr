@@ -6,3 +6,18 @@
   	<%= postTemplate({ post: post }) %>
   <% }) %>
 </section>
+
+<script>
+	$(function () {
+		if (Chattr.currentUser.id === 1) {
+			$(document).tooltip({
+				position: {
+					my: "left top",
+					at: "left+10 top+40"
+				}
+			});
+			$('.post:last-child .text')
+				.text("Welcome! Hover over different elements for helpful tips on using chattr!")
+		}
+	})
+</script>

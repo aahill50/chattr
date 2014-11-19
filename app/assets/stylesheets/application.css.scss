@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require jquery.ui.all
  *= require_tree .
  */
 
@@ -30,6 +31,11 @@ button {
 	font-style: italic;
   cursor: pointer;
   outline: 0;
+}
+
+button.large {
+	font-size: 20px;
+	padding: 5px 10px;
 }
 
 input[type='text'],
@@ -466,7 +472,7 @@ article.post {
 
 .site-description {
 	position: absolute;
-	top: 100px;
+	top: 110px;
 	margin: 0 auto;
 	background: rgba(0,0,0,0.35);
 	color: white;
@@ -474,7 +480,7 @@ article.post {
 	font-size: 24px;
 	border-radius: 5px;
 	width: 260px;
-	left: 245px;
+	left: 240px;
 	text-align: right;
 }
 
@@ -516,9 +522,17 @@ article.post {
 	box-shadow: 0 0 2px 2px #E1A867;
 }
 
-.user-form button {
-	float: right;
-	border-bottom: 1px solid #154862;
+.user-form .buttons {
+	padding-left: 10px;
+	
+	button {
+		float: right;
+		border-bottom: 1px solid #154862;
+	}
+	
+	button.demo {
+		float: left;
+	}
 }
 
 .user-form button:hover {

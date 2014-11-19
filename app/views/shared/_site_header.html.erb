@@ -3,8 +3,10 @@
   <% if signed_in? %>
       <li class="left"><a id="home" href="<%= root_url %>">Home</a></li>
       <!-- <li class="left"><a id="notifications" href="#">Notifications</a></li> -->
-      <li class="left"><a id="discover" href="/#hashtags">#Discover</a></li>
-      <li class="right"><a id="new-post" href="<%= new_post_url %>">New Post</a></li>
+      <li class="left"><a id="discover" href="/#hashtags"
+					title="Discover the most popular hashtags on chattr!">#Discover</a></li>
+      <li class="right"><a id="new-post" href="<%= new_post_url %>"
+					title="Write a new post">New Post</a></li>
 
       <li class="right">
         <form id="sign-out" action="<%= session_url %>" method="POST">
@@ -23,7 +25,8 @@
       <li class="right" id="search-container">
         <form id="search" action="<%= user_search_url %>" class="search-chattr" method="POST">
           <%= render 'shared/auth_token' %>
-          <input type="search" name="search[string]" placeholder="Search chattr">
+          <input type="search" name="search[string]" placeholder="Search chattr"
+								 title="Enter at least 3 characters to see search results for users and hashtags">
         </form>
 				<div class="search-results">
 					<ul class="users">
@@ -41,14 +44,34 @@
 	</ul>
 </header>
 
+<div class="modal overlay inactive"></div>
+<section class="modal window inactive">
+	<span class="close-modal">&times;</span>
+	<form class="new-post" action="#">
+		<div class="form-group group">
+			<section class="title">
+				Compose New Post...
+			</section>
+		</div>
+	  <textarea
+	    name="post[content]"></textarea>
+			<div class="form-group group">
+			  <button class="submit large">Post</button>
+			</div>
+	  <span class="char-counter"></span>
+	</form>
+</section>
+
 <script>
   <% if signed_in? %>
 		$(function () {
-			$('body').removeClass('unsigned')
-			$('#current-user').prop("href", "/#users/" + <%= current_user.id %>)
-			$('#home').prop("href", "/#")
+			$('body').removeClass('unsigned');
+			$('#current-user').prop("href", "/#users/" + <%= current_user.id %>);
+			$('#home').prop("href", "/#");
+			$('#home').prop("title", "Return to your main feed");
 		
 			var $dropdownParent = $('.dropdown-parent')
+			$dropdownParent.prop("title", "See options for the current user");
 			var $dropdown = $('<ul>')
 			var $myProfileLi = $('<li>')
 			var $editUserLi = $('<li>')
@@ -106,4 +129,41 @@
 			$('body').addClass('unsigned')
 		})
 	<% end %>
+</script>
+		
+<script>
+		
+	$(function () {
+		$newPostLink = $('#new-post');
+		var $modalOverlay = $('.modal.overlay');
+		var $modal = $('.modal.window');
+		var $close = $('.close-modal');
+		var $form = $modal.find('form');
+		
+		$newPostLink.on("click", function (event) {
+			event.preventDefault();
+			$modalOverlay.removeClass('inactive');
+			$modal.removeClass('inactive');
+		})
+		
+		$close.on("click", function (event) {
+			$modalOverlay.addClass('inactive');
+			$modal.addClass('inactive');
+		})
+		
+		$form.on("submit", function (event) {
+			event.preventDefault();
+			var params = $form.serializeJSON()['post'];
+			var newPost = new Chattr.Models.Post()
+			
+			newPost.save(params,{
+				success: function () {
+					$modalOverlay.addClass('inactive');
+					$modal.addClass('inactive');
+					$form.find('textarea').val("");
+					Chattr.Collections.posts.add(newPost);
+				}
+			})
+		})
+	})
 </script>

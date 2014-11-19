@@ -58,7 +58,7 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
     var post = new Chattr.Models.Post(params)
     post.save([],{
       success: function () {
-        that.user.posts().add(post);
+        that.posts.add(post);
         $post.find('.repost-form').addClass("closed");
         $post.find('.reply-form').addClass("closed");
       }
@@ -95,9 +95,11 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
   toggleFavorite: function(event) {
     event.preventDefault();
     var postId = $(event.currentTarget).data("post-id");
+		var $favButton = $(event.currentTarget)
     var post = this.posts.getOrFetch(postId);
+		this.favs = post.favorites()
     var that = this;
-
+		
     var fav_options = {
       user_id: Chattr.currentUser.id,
       favoriteable_type: "Post",
@@ -109,16 +111,16 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
 			fav.destroy({ 
 				wait: true,
 				success: function() {
-					that.posts.fetch()
-					that.favs.fetch()
+					$favButton.text("Favorite")
+					// that.favs.fetch()
 				}
 			});
 		} else {
 			this.favs.create(fav_options, { 
 				wait: true,
 				success: function() {
-					that.posts.fetch();
-					that.favs.fetch();
+					$favButton.text("Unfavorite")
+					// that.favs.fetch();
 				}
 			});
 		}
@@ -199,61 +201,93 @@ Chattr.Views.UserShow = Backbone.CompositeView.extend({
 	changeActiveLink: function (event) {
 		event.preventDefault();
 		var that = this;
-		$newActiveLink = $(event.target)
+		var $newHeader = $("<header>")
+		var	$newActiveLink = $(event.target)
+		var $postsContainer = $('.posts-container');
+
+		$newHeader.addClass("title")
 		$newActiveLink.addClass("active")
 		$newActiveLink.parent().siblings().children().removeClass("active");
 		
 		$linkText = $newActiveLink.text();
 
 		if ($linkText === "Posts") {
-			this.render()
+	    this.posts = this.user.posts();
+			this.render();
+			
 		} else if ($linkText === "Following") {
-			var followedUsers = this.user.followedUsers()
-
-			followedUsers.fetch({
-				success: function () {
-					$newHeader = $("<header>")
-					$newHeader.addClass("title")
-					$newHeader.append("<h2>Following</h2>")
-					
-					$('.posts-container').html($newHeader)
-					$('.posts-container').append(that.followTemplate({users: followedUsers}))
-				}
-			})		
+			var followedUsers = this.user.followedUsers();
+			$newHeader.html("<h2>Following</h2>");
+			$postsContainer.html($newHeader);
+			if (followedUsers.length === 0) {
+				$postsContainer.append('\
+					<article class="post group">\
+						<section class="post-info"></section>\
+						<section class="post-content">' + 
+							this.user.get("_username") + ' isn\'t following anyone!\
+						</section>\
+					</article>')
+			} else {
+				$postsContainer.append(this.followTemplate({users: followedUsers}));
+			}
 		} else if ($linkText === "Followers") {
-			var followers = this.user.followers()
-
-			followers.fetch({
-				success: function () {
-					$newHeader = $("<header>")
-					$newHeader.addClass("title")
-					$newHeader.append("<h2>Followers</h2>")
-					
-					$('.posts-container').html($newHeader)
-					$('.posts-container').append(that.followTemplate({users: followers}))
-				}
-			})	
+			var followers = this.user.followers();
+			$newHeader.html("<h2>Followers</h2>");
+			$postsContainer.html($newHeader);
+			if (followers.length === 0) {
+				$postsContainer.append('\
+					<article class="post group">\
+						<section class="post-info"></section>\
+						<section class="post-content">' +
+							this.user.get("_username")+ ' doesn\'t have any followers!\
+						</section>\
+					</article>')
+			} else {
+				$postsContainer.append(this.followTemplate({users: followers}));
+			}
 		} else if ($linkText === "Favorite Posts") {
-			$newHeader = $("<header>")
-			$newHeader.addClass("title")
-			$newHeader.append("<h2>Favorite Posts</h2>")
-			
-			var favoritePosts = this.user.favoritePosts();
-			
-			favoritePosts.fetch({
-				success: function () {
-					$('.posts-container').html($newHeader)
-					$('.posts-container').append(that.favoritePostsTemplate({ user: that.user, posts: favoritePosts }))
-				}
-			})
-			
+			this.posts = this.user.favoritePosts();
+			this.renderFavPosts();
 		} else if ($linkText === "Favorite Users") {
-			$newHeader = $("<header>")
-			$newHeader.addClass("title")
-			$newHeader.append("<h2>Favorite Users</h2>")
-			
-			$('.posts-container').html($newHeader)
-			$('.posts-container').append("ALL THE FAVORITE USERS")
+			$newHeader.html("<h2>Favorite Users</h2>");
+			$postsContainer.html($newHeader);
+			$postsContainer.append('\
+				<article class="post group">\
+					<section class="post-info"></section>\
+					<section class="post-content">' +
+						this.user.get("_username")+ ' doesn\'t have any favorite users!\
+					</section>\
+				</article>')
+		}
+	},
+	
+	renderFavPosts: function () {
+		var that = this;
+		var $newHeader = $("<header>")
+		var	$newActiveLink = $(event.target)
+		var $postsContainer = $('.posts-container');
+
+		$newHeader.addClass("title")
+		$newActiveLink.addClass("active")
+		$newActiveLink.parent().siblings().children().removeClass("active");
+		
+		$linkText = $newActiveLink.text();
+		
+		$newHeader.html("<h2>Favorite Posts</h2>");
+		$postsContainer.html($newHeader);
+		
+		if (this.posts.length === 0) {
+			$postsContainer.append('\
+				<article class="post group">\
+					<section class="post-info"></section>\
+					<section class="post-content">' +
+						this.user.get("_username")+ ' doesn\'t have any favorite posts!\
+					</section>\
+				</article>')
+		} else {
+			this.posts.each( function (post) {
+				$postsContainer.append(that.favoritePostsTemplate({ user: that.user, post: post }));
+			})
 		}
 	}
 	

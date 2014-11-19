@@ -1,4 +1,4 @@
-<section class="profile-banner">
+<section class="profile-banner" title="Click here to upload a new banner">
 	<figure class="banner">
 		<img src="<%= user.get("banner_url") %>">
 	</figure>
@@ -11,19 +11,24 @@
 	<figure class="ribbon">
 		<ul class="profile-nav">
 			<li class="left">
-        <a id="posts-link" class="active" href="/#users/<%= user.id %>">Posts</a>
+        <a id="posts-link" class="active" href="/#users/<%= user.id %>"
+						title="Check out all of this user's posts">Posts</a>
       </li>
 			<li class="left">
-        <a id="following-link" href="#/users/<%= user.id %>/following">Following</a>
+        <a id="following-link" href="#/users/<%= user.id %>/following"
+						title="See who this user is following">Following</a>
       </li>
 			<li class="left">
-        <a id="followers-link" href="#/users/<%= user.id %>/followers">Followers</a>
+        <a id="followers-link" href="#/users/<%= user.id %>/followers"
+						title="See who follows this user">Followers</a>
       </li>
 			<li class="left">
-        <a id="fav-posts-link" href="#/users/<%= user.id %>/favorite_posts">Favorite Posts</a>
+        <a id="fav-posts-link" href="#/users/<%= user.id %>/favorite_posts"
+						title="Check out this users favorite posts">Favorite Posts</a>
       </li>
 			<li class="left">
-        <a id="fav-users-link" href="#">Favorite Users</a>
+        <a id="fav-users-link" href="#"
+					title="Check out this users favorite users">Favorite Users</a>
       </li>
 		</ul>
 	</figure>
@@ -34,6 +39,14 @@
 
 	<section class="posts-container">
 	  <header class="title"><h2>Posts from <%= user.get("_username") %></h2></header>
+		<% if(posts.length === 0) { %>
+			<article class="post group">
+				<section class="post-info"></section>
+				<section class="post-content">
+					<%= user.get("_username") %> doesn't have any posts!
+				</section>
+			</article>
+		<% } %>
 	  <% posts.each( function(post) { %>
 	  	<%= postsTemplate({ post: post }) %>
 	  <% }) %>

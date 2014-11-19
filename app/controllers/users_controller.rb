@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :require_signed_in!, except: [:new, :create]
+  before_filter :require_signed_in!, except: [:new, :create, :demo]
 
   def index
     @users = User.all
@@ -32,6 +32,14 @@ class UsersController < ApplicationController
       flash.now[:errors] = @user.errors.full_messages
       render :new
     end
+  end
+  
+  def demo
+    user = User.find_by(username: "demo")
+    sign_in!(user)
+    user.posts.destroy_all
+    user.posts.create(content: "Welcome to chattr!");
+    render json: user
   end
 
   def update

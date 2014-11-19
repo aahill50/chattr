@@ -3,6 +3,7 @@ Chattr.Views.PostsIndex = Backbone.View.extend({
     this.posts = options.posts;
 		this.posts.fetch();
    
+	 	this.listenTo(Chattr.currentUser, "sync", this.render);
     this.listenTo(this.posts, "add remove", this.render);
   },
 	

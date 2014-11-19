@@ -14,6 +14,7 @@ gem 'backbone-on-rails'
 gem 'ejs'
 gem 'faker'
 gem 'filepicker-rails'
+gem 'jquery-ui-rails'
 
 group :doc do
   gem 'sdoc', require: false

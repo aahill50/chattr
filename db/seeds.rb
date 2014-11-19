@@ -18,11 +18,19 @@
 #
 # UserFollow.create(user_id: , follower_id: )
 
+User.create(username:"demo",
+            fullname:"Demo Account",
+            email:"demo@example.com",
+            bio:"Welcome to chattr!",
+            password:"password")
+            
 User.create(username:"aaron",
             fullname:"Aaron Hill",
             email:"aaron@example.com",
             bio:"I made this!",
             password:"password")
+            
+
 
 USER_COUNT = 10
 POST_COUNT = 10
@@ -33,7 +41,7 @@ BIO_STARTS = ["I like to ", "I believe we need to ", "I should probably ",
               "Every now and then, it's nice to "]
 BIO_ENDS = [".", "...", "!", "!!!", "\n ~Unknown", "\n ~Anon", "\n :)"]
 
-(USER_COUNT - 1).times do
+(USER_COUNT - 2).times do
   fname = Faker::Name.name
   uname = Faker::Internet.user_name(fname)
   eml = Faker::Internet.safe_email(fname)
